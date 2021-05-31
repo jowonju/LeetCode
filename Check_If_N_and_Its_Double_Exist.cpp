@@ -34,7 +34,8 @@ public:
         //set<int> s;
         /*for (int i = 0; i < arr.size(); i++)
         {
-            if (s.find(arr[i] * 2) != s.end())
+            if (s.find(arr[i] * 2) != s.end()) //!=s.end()를 하는 이유는 find를 했을때 찾고자하는 element를 못찾으면 end()를 리턴하게 되는게 이를 방지하고자
+                                               //따라서 무조건 원소를 찾는경우다 라고 이해하면 된다.
                 return true;
 
             if (arr[i] % 2 == 0 && s.find(arr[i] * 2) != s.end())
