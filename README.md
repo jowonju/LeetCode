@@ -17,7 +17,7 @@ ListNode* middleNode(ListNode* head) {
         {
             if (copyNode->next != nullptr)
             {
-        	copyNode = copyNode->next;
+        	   copyNode = copyNode->next;
             }
     	}
     	return copyNode;
