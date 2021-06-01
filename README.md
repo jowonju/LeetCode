@@ -16,9 +16,9 @@ ListNode* middleNode(ListNode* head) {
         for (int i = 0; i < targetIndex - 1; i++)
         {
             if (copyNode->next != nullptr)
-        	{
-        		copyNode = copyNode->next;
-    		}
+            {
+        	copyNode = copyNode->next;
+            }
     	}
     	return copyNode;
 }
@@ -41,5 +41,5 @@ ListNode* middleNode(ListNode* head) {
     return slowRunner;
   }
 ```
-The fast pointer stops where behind the nullptr then the slow's position be the middle of the node because it is a single linked list and the pointers jump twice.
+The fast pointer stops where behind the nullptr then the slow's position be the middle of the node because it is a single linked list and the pointer jump twice.
 I thought the fast-slow method is good when I distinguish the thing is a cycle or not but I realize this method is also good for distinguishing the middle.
