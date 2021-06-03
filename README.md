@@ -1,4 +1,4 @@
-leetcode 376
+*leetcode 376*
 >This is my version code.
 ```c++
 ListNode* middleNode(ListNode* head) {
@@ -43,3 +43,49 @@ ListNode* middleNode(ListNode* head) {
 ```
 The fast pointer stops where behind the nullptr then the slow's position be the middle of the node because it is a single linked list and the pointer jump twice.
 I thought the fast-slow method is good when I distinguish the thing is a cycle or not but I realize this method is also good for distinguishing the middle.
+
+*leetcode 922*
+>My version
+```c++
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& nums) {
+        int size = nums.size();
+        int j = 0;
+        for (int i = 0; i < size; i++) {
+            if (i % 2 == 0 && nums[i] % 2 != 0) {
+                while (true) {
+                    if (j % 2 == 1 && nums[j] % 2 == 0)
+                    {
+                        break;
+                    }
+                    j++;
+                }
+                swap(nums[j], nums[i]);
+            }
+        }
+        return nums;
+    }
+};
+```
+Other person's version
+```c++
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& nums) {
+         
+        for(int i =0 , j =1 ; j < nums.size() && i <nums.size();)
+        {
+            if(nums[i] %2 ==0)
+            i+=2;
+            else if(nums[j] % 2 ==1)
+            j+=2;
+            else
+            swap(nums[i],nums[j]);
+        }
+        return nums;
+    }
+};
+```
+Since it checks even and odd indexes, it doesn't have to initialize only one variable or add one by one(like me, i++, and, i = 0). Just using +=2.
+I didn't familiar with using the two variables at the for loop, but I realized the usage when I see this version.
