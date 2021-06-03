@@ -68,7 +68,7 @@ public:
     }
 };
 ```
-Other person's version
+>Other person's version
 ```c++
 class Solution {
 public:
