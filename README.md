@@ -89,3 +89,44 @@ public:
 ```
 Since it checks even and odd indexes, it doesn't have to initialize only one variable or add one by one(like me, i++, and, i = 0). Just using +=2.
 I didn't familiar with using the two variables at the for loop, but I realized the usage when I see this version.
+
+*leetcode 104*
+>My version
+```c++
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if (root == nullptr)
+            return 0;
+        int rightLength = 0;
+        int leftLength = 0;
+        int result = 0;
+
+        rightLength = maxDepth(root->right);
+        leftLength = maxDepth(root->left);
+
+        result = 1 + (rightLength > leftLength ? rightLength : leftLength);
+
+        return result;
+    }
+};
+```
+>Other person's version
+```c++
+class Solution{
+public:
+    int maxDepth(TreeNode* root) {
+        if(root == NULL){
+            return 0;
+        }
+        return max(maxDepth(root->right),maxDepth(root->left))+1;
+    }
+
+};
+```
+When using algorithm max function, the runtime is 0 ms. If I use the max function, then I don't need to declare variables(like my version -> rightLength, leftLength, result).
+And I think this part 
+```c++ 
+return max(maxDepth(root->right),maxDepth(root->left))+1;
+``` 
+is RVO, so the runtime reduced. Also, using the algorithm function reduces the runtime, but I don't know the reason(6/4).
