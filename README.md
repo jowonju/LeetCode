@@ -131,7 +131,7 @@ return max(maxDepth(root->right),maxDepth(root->left))+1;
 ``` 
 is RVO, so the runtime reduced. Also, using the algorithm function reduces the runtime, but I don't know the reason(6/4).
 
-*leetcode 617*
+*leetcode 614*
 >code
 ```c++
 class Solution {
