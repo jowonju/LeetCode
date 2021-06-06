@@ -130,3 +130,35 @@ And I think this part
 return max(maxDepth(root->right),maxDepth(root->left))+1;
 ``` 
 is RVO, so the runtime reduced. Also, using the algorithm function reduces the runtime, but I don't know the reason(6/4).
+
+*leetcode 617*
+>code
+```c++
+class Solution {
+public:
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        if (root1 == nullptr)
+            return root2;
+        if (root2 == nullptr)
+            return root1;
+
+        root1->val += root2->val;
+        root1->left = mergeTrees(root1->left, root2->left);
+        root1->right = mergeTrees(root1->right, root2->right);
+
+        return root1;
+        
+    }
+};
+```
+I struggle with this problem. After spending 1 day, I determined that seeing the solution and after seeing the solution, I felt this problem is good to practice the recursion.
+When I solving this problem, I knew the method that gets each value of the leaves but I didn't know how to store the values(each tree's leaf values). 
+The first time, I used the map and vector to store the values but there was a problem that stores the nullptr.
+```c++
+if (root1 == nullptr)
+    return root2;
+if (root2 == nullptr)
+    return root1;
+```
+However, as you can see, I don't need to store any values if I use the root. Just plus root2's value to root1.
+If root1 is null, return root2 and accept the value as a result, then I also change the nullptr location's value to root2's value.
