@@ -162,3 +162,49 @@ if (root2 == nullptr)
 ```
 However, as you can see, I don't need to store any values if I use the root. Just plus root2's value to root1.
 If root1 is null, return root2 and accept the value as a result, then I also change the nullptr location's value to root2's value.
+
+*Leetcode 461*
+>my version
+```c++
+class Solution {
+public:
+    int hammingDistance(int x, int y) {
+        int result = 0;
+        bitset<32> x_bitset(x);
+        bitset<32> y_bitset(y);
+        
+        for(int i = 0; i<x_bitset.size(); i++)
+        {
+            if (x_bitset[i] != y_bitset[i])
+                result++;
+        }
+        
+        return result;
+    }
+};
+```
+I used the bitset header to get the bits of the x and y. After getting the bits, I compared the bits one by one.
+For solving this question, I did study the bitset header usage.
+
+>other person's version
+```c++
+class Solution {
+public:
+    int hammingDistance(int x, int y) {
+        int n = x ^ y;
+        int res = 0; 
+        while(n){ 
+            res += n & 1; 
+            n >>= 1; 
+        }
+        return res;         
+    }
+};
+```
+This version using the XOR to get the result. I knew the XOR but I didn't think that using the XOR to solve this problem.
+For example, if x is 5 and y is 1.
+x 0101      0100    0100    0100
+y 0001  ->  0001 -> 0010 -> 0100  
+^ ----     &----   &----   &----
+  0100      0000    0000    0100  = then the result += 1;
+I think the XOR version is useful to pratice the XOR or bit operation.
