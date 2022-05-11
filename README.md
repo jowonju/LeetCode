@@ -208,3 +208,40 @@ y 0001  ->  0001 -> 0010 -> 0100
 ^ ----     &----   &----   &----
   0100      0000    0000    0100  = then the result += 1;
 I think the XOR version is useful to pratice the XOR or bit operation.
+
+*Leetcode 2*
+I couldn't solve this problem so just understand write for the study.
+
+```c++
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int carry = 0;
+
+        ListNode* ans = new ListNode(-1);
+        ListNode* temp = ans;
+
+        while (l1 || l2 || carry != 0) {
+            int no1 = l1 ? l1->val : 0;
+            int no2 = l2 ? l2->val : 0;
+
+            int sum = no1 + no2 + carry;
+
+            temp->next = new ListNode(sum % 10);
+            temp = temp->next;
+
+            carry = sum / 10;
+
+            l1 = l1 ? l1->next : l1;
+            l2 = l2 ? l2->next : l2;
+        }
+
+        return ans->next;
+    }
+};
+```
+Store the remainder to the temp->next. Since the temp is the ans's pointer, so the ans value is changed even if the temp value is changed.
+Get the l1 and l2's sum value also the carry. The carry is increased when the sum exceeds 10. (sum/10)
+After getting the sum between current nodes then change the node to the next node's value.
+And repeat this until l1 or l2 be the nullptr.
+When the l1 or l2 is nullptr or the carry is 0 then I can get the answer(stored the ans).
