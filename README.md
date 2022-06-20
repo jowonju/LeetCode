@@ -245,3 +245,91 @@ Get the l1 and l2's sum value also the carry. The carry is increased when the su
 After getting the sum between current nodes then change the node to the next node's value.
 And repeat this until l1 or l2 be the nullptr.
 When the l1 or l2 is nullptr or the carry is 0 then I can get the answer(stored the ans).
+
+*Leetcode 13*
+My one
+```c++
+class Solution {
+public:
+    int romanToInt(string s) {
+             
+        int size = s.length();
+        int result = 0;
+        string copy = s;
+        std::map<char, int> dictionary;
+        
+        dictionary.insert(std::pair<char,int>('I', 1));
+        dictionary.insert(std::pair<char,int>('V', 5));
+        dictionary.insert(std::pair<char,int>('X', 10));
+        dictionary.insert(std::pair<char,int>('L', 50));
+        dictionary.insert(std::pair<char,int>('C', 100));
+        dictionary.insert(std::pair<char,int>('D', 500));
+        dictionary.insert(std::pair<char,int>('M', 1000));
+        
+        for(int i = 0; i < size; i++)
+        {
+            if(i == size -1)
+                continue;
+            
+            int compare1 = dictionary.find(copy[i])->second;
+            int compare2 = dictionary.find(copy[i+1])->second;
+            
+            if (compare1 >= compare2)
+            {
+                result += compare1; 
+            }
+            else {
+                int abs = std::abs(compare1 - compare2);
+                result += abs;
+                i++;
+                if(i == size - 1)
+                {
+                    return result;
+                }
+            }
+                    
+        }
+            
+        result += dictionary.find(copy[size-1])->second;
+        return result;       
+    }
+};
+```
+Runtime: 24 ms, faster than 30.97% of C++ online submissions for Roman to Integer.
+Memory Usage: 8.2 MB, less than 29.33% of C++ online submissions for Roman to Integer.
+
+First, I thought I need to distinguish those letters so I made a map to store them. 
+After storing, I compared two chars in order, and if the compare1 value smaller than compar2, I subtract two numbers and plus the i.
+Because the two chars combined to the one string and the other situation just add the compare1 value.
+
+Another one
+```c++
+class Solution {
+public:
+    int romanToInt(string s) {
+        unordered_map<char,int> mp{
+            {'I',1},
+            {'V',5},
+            {'X',10},
+            {'L',50},
+            {'C',100},
+            {'D',500},
+            {'M',1000},
+        };
+        int ans =0;
+        for(int i=0;i<s.size();i++){
+            if(mp[s[i]]<mp[s[i+1]])
+                ans-=mp[s[i]];
+            else
+                ans+=mp[s[i]];
+        }
+        return ans;
+        
+    }
+};
+```
+It is similar to mine, but this one used an unordered map and did not use the insert function when initializing.
+Also, this used the mp[s[i]], means the [] operator.
+=> the [] operator returns the key's second value.
+It is better to reduce the runtime because of not using the find function in every calculation.
+
