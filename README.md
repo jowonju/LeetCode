@@ -333,3 +333,28 @@ Also, this used the mp[s[i]], means the [] operator.
 => the [] operator returns the key's second value.
 It is better to reduce the runtime because of not using the find function in every calculation.
 
+*Leetcode - Remove Duplicates from Sorted Array*
+```c++
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int size = nums.size();
+
+        for(int i = size - 1; i > 0; i--)
+        {            
+            if(i == 0)
+                continue;
+            
+            if(nums[i] == nums[i - 1])
+            {
+                nums.erase(nums.begin() + i);
+            }
+        }
+        
+        return nums.size();
+    }
+};
+```
+I checked all elements using linear search. 
+If the first value(nums[i]) is equal with the second value(nums[i - 1]) then delete the first value.
+After checking all values, then just return the size of the changed vector.
