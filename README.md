@@ -358,3 +358,32 @@ public:
 I checked all elements using linear search. 
 If the first value(nums[i]) is equal with the second value(nums[i - 1]) then delete the first value.
 After checking all values, then just return the size of the changed vector.
+
+*Leetcode - Best Time to Buy and Sell Stock II*
+```c++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        
+        int result = 0;
+        int size = prices.size();
+
+        for(int i = 0; i < size; i++)
+        {
+            if(i == size - 1)
+                continue;
+            
+            if(prices[i] < prices[i + 1])
+            {
+                result += prices[i + 1] - prices[i];   
+            }
+            
+        }
+
+        return result;
+    }
+};
+```
+For check the profit, I compared the first value(prices[i]) and the second value(prices[i + 1]). 
+If the first value is greater than the second value, then I can profit because I can sell the stock more expensive than I bought.
+After storing the calculated profit, keep checking values. And if the condition is met again, add the profit value to the result value.
