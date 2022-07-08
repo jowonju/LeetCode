@@ -387,3 +387,53 @@ public:
 For check the profit, I compared the first value(prices[i]) and the second value(prices[i + 1]). 
 If the first value is greater than the second value, then I can profit because I can sell the stock more expensive than I bought.
 After storing the calculated profit, keep checking values. And if the condition is met again, add the profit value to the result value.
+
+*Leetcode - Rotate Array*
+```c++
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int s = nums.size();
+        vector<int> modded(s);
+        for(int i = 0; i < s; i++) modded[(i+k)%s] = nums[i];
+        nums = modded;
+    }
+};
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int size = nums.size();
+        int k_ = k % size;
+            
+        reverse(nums.begin(), nums.begin() + size - k_);
+        reverse(nums.begin() +size - k_, nums.end());
+        reverse(nums.begin(), nums.end());
+    
+    }
+
+};
+```
+I didn't solve this problem but I can get to how to approach (rotating formula and reverse way) the rotating.
+
+The first one is the formula way.
+If using the formula((i + k) % s) then I can get the remaining indexes(like after the index of the k-> example is 3 so we can get the 3 index = the array starts at 0, not 1, so it's right to get the index 3).
+For example, if the k is 3 and the given array is [1,2,3,4,5,6,7], the result be [5,6,7,1,2,3,4].
+
+i | (i + k) % s |    result
+0 |     3       | m[3] = num[0]; 
+1 |     4       | m[4] = num[1];
+2 |     5       | m[5] = num[2];
+3 |     6       | m[6] = num[3];
+4 |     0       | m[0] = num[4];
+5 |     1       | m[1] = num[5];
+6 |     2       | m[2] = num[6];
+
+After applying that formula, can get the result array.
+
+The second one used the reverse way.
+I can separate the array-like 0 to n-k, and n-k to n. ->the first separate one is [1,2,3,4] and the second separate one is [5,6,7].
+If I reverse the first one then the array is [4,3,2,1] and the second one is [7,6,5].
+And reverse the whole array the array be [5, 6, 7, 1, 2, 3, 4].
+Then I can easily get the reversed array.
