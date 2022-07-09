@@ -437,3 +437,49 @@ I can separate the array-like 0 to n-k, and n-k to n. ->the first separate one i
 If I reverse the first one then the array is [4,3,2,1] and the second one is [7,6,5].
 And reverse the whole array the array be [5, 6, 7, 1, 2, 3, 4].
 Then I can easily get the reversed array.
+
+*Leetcode - Contains Duplicate*
+
+```c++
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        bool result = false;
+        vector<int> storage = nums;
+        std::sort(storage.begin(), storage.end());
+        
+        for(int i = 0; i < storage.size(); i++)
+        {
+            if(i == storage.size() - 1)
+                continue;
+            
+            if(storage[i] == storage[i + 1])
+            {
+                result = true;
+                break;
+            }   
+        }
+        
+        return result;
+    }
+};
+```
+
+First, I thought compare all values using two for loops. 
+For example,
+```c++
+for(int i = 0; i < storage.size(); i++){
+    int compare = storage[i];
+    for(int j = 0; j < storage.size(); j++)
+    {
+        if(compare == storage[j])
+        {
+            result = true;
+            break;
+        }
+    }
+}
+```
+but this way's time complexity is O(n^2), so I used the std::sort function.
+If the array is sorted then I can check the duplicated values by only using one for loop(linear search).
+The sort function's time complexity is O(n log n) so it's better than the second way.
