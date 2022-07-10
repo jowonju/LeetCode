@@ -483,3 +483,88 @@ for(int i = 0; i < storage.size(); i++){
 but this way's time complexity is O(n^2), so I used the std::sort function.
 If the array is sorted then I can check the duplicated values by only using one for loop(linear search).
 The sort function's time complexity is O(n log n) so it's better than the second way.
+
+*Leetcode - Single number*
+
+my one
+```c++
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        vector<int> storage = nums;
+        sort(storage.begin(), storage.end());
+        int size = nums.size();
+        int result = 0;
+        bool check = false;
+        
+        for(int i = 0; i < size - 1; i++)
+        {
+            if(storage[i] == storage[i + 1])
+            {
+                i++;
+                continue;
+            }
+            else{
+                check = true;
+                result = storage[i];
+                break;
+            }
+        }
+        
+        if(!check)
+            result = storage[size - 1];
+            
+        return result;
+    }
+};
+```
+I thought if I used sorting then I can find the single number by searching the first(storage[i]) and the second value(storage[i+1]).
+but I found better ways to solve this problem.
+If I use the return, I don't need to use the bool variable.
+Below is the improved version.
+```c++
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        vector<int> storage = nums;
+        sort(storage.begin(), storage.end());
+        int size = nums.size();
+        int result = 0;
+        bool check = false;
+        
+        for(int i = 0; i < size - 1; i += 2)
+        {
+            if(storage[i] != storage[i + 1])
+            {
+                return storage[i];
+            }
+            
+        }   
+        return storage[size - 1];
+    }
+};
+```
+
+And can solve this problem by using the map.
+I also thought about using the map to solve this problem.
+But I'm not familiar with using the map so I just used the first way.
+
+another one using map
+```c++
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) { 
+       unordered_map<int,int> a;
+       for(auto x: nums)
+           a[x]++;
+       for(auto z:a)
+           if(z.second==1)
+               return z.first;
+       return -1;
+    }
+};
+```
+This is another person's answer for using a map.
+After passing the for loop, the map stored values in ascending order.
+For example, if the nums vector content [1,1,2,2,3], then the map's content be (1,2) | (2,2) | (3,1)
+so I can get the single number through the map's second value.
