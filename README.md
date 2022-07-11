@@ -568,3 +568,84 @@ This is another person's answer for using a map.
 After passing the for loop, the map stored values in ascending order.
 For example, if the nums vector content [1,1,2,2,3], then the map's content be (1,2) | (2,2) | (3,1)
 so I can get the single number through the map's second value.
+
+*Leetcode - Intersection of Two Arrays II*
+
+my one
+```c++
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        map<int, int> store1;
+        map<int, int> store2;
+        vector<int> result;
+        
+        for(auto num: nums1)
+        {
+            store1[num]++;
+        }
+        
+        for(auto num: nums2)
+        {
+            store2[num]++;
+        }
+        
+        for(std::map<int, int>::iterator it = store1.begin(); it != store1.end(); it++)
+        {
+            int compare = it->first;
+            std::map<int, int>::iterator iter = store2.find(compare);
+            int count = min(iter->second, it->second);
+            for(int i = 0; i < count; i++)
+            {
+                result.push_back(iter->first);
+            }
+        }
+        return result;
+    }
+};
+```
+I used map STL to compare the values.
+First, store the values of each map.
+After storing, then the result be (if the nums1 [4,9,5] and the nums2 [9, 4, 9, 8, 4])
+store1: (4, 1) | (5, 1) | (9, 1)
+store2: (4, 2) | (8, 1) | (9, 2)
+=>The map sorts values in ascending order automatically. 
+
+Second, find the iterator that has the same first value by using the for-loop.
+If succeed at finding the value, then push_back the iterator's second value as the minimum value between two iterator's values.
+
+the another one
+```c++
+class Solution {
+public:
+vector intersect(vector& nums1, vector& nums2) {
+
+    vector<int> ans;
+    
+    sort(nums1.begin(), nums1.end());
+    sort(nums2.begin(), nums2.end());
+    
+    for(int i=0, j=0; i<nums1.size() && j<nums2.size(); )
+    {
+        if(nums1[i] < nums2[j])
+            i++;
+        else if(nums1[i] > nums2[j])
+            j++;
+        else
+        {
+            ans.push_back(nums1[i]);
+            i++;
+            j++;
+        }
+    }
+    return ans;
+}
+};
+```
+Above answer is the 100% fastest version.
+This answer used sorting and for-loop that using two initial variable.
+If the nums[i] < num2[j] then increase the i value, in the opposite situtaion, increase j value.
+For example, the nums1 is [1, 2, 2, 1] and the nums2 is [2, 2].
+After sorting two container, the nums1 be [1, 1, 2, 2] and the nums2 [2, 2].
+In the for-loop, the i is increase when the i and j are 0.
+When the condition that two values are same is met, then push_back the value because it means the value is same.
