@@ -649,3 +649,42 @@ For example, the nums1 is [1, 2, 2, 1] and the nums2 is [2, 2].
 After sorting two container, the nums1 be [1, 1, 2, 2] and the nums2 [2, 2].
 In the for-loop, the i is increase when the i and j are 0.
 When the condition that two values are same is met, then push_back the value because it means the value is same.
+
+*Leetcode - Plus One*
+
+```c++
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        vector<int> result;
+        int size = digits.size();
+    
+        for(int i = size, index = size - 1; i > 0; i--, index--)
+        {
+            int count = digits[index] + 1;
+            if(count == 10)
+            {
+                if(index - 1 < 0)
+                {
+                    digits[index] = 1;
+                    digits.push_back(0);
+                }
+                else {
+                    digits[index] = 0; 
+                }
+            }
+            else {
+                digits[index]++;
+                return digits;
+            }
+        }
+        return digits;
+    }
+};
+```
+First, start at the end of the vector and just plus one to the element.
+If the element value is under 9, don't need to think about the digit number, but if the value is over 9, then it means the digit number is increased. 
+For example, if the element value is 9 and after plus one, the digit number is increased from 1 to 2. (1 -> 10)
+And if that situation(digit number increased), the index value be 0, but if the former index is not assigend than the index value be 1 and push back 0 to the end.
+For example, if the value is 9 then the value(index - 1) is -1, it means the index is out of range.
+So changed the index value 1 and push back 0 to the end, the result be [1, 0].
