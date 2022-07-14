@@ -688,3 +688,82 @@ For example, if the element value is 9 and after plus one, the digit number is i
 And if that situation(digit number increased), the index value be 0, but if the former index is not assigend than the index value be 1 and push back 0 to the end.
 For example, if the value is 9 then the value(index - 1) is -1, it means the index is out of range.
 So changed the index value 1 and push back 0 to the end, the result be [1, 0].
+
+*Leetcode - Move Zeros*
+
+
+```c++
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int size = nums.size();
+          
+        if(size == 1) 
+            return;
+        
+        int zeroCount = 0;
+        bool flag = false;
+        
+        for(int i = 0; i < size; i++)
+        {
+            if(nums.size() == 0 || i > nums.size() - 1)
+                break;
+            
+            if(flag)
+            {
+                i = 0;
+                flag = false;
+            }
+            if(nums[i] == 0)
+            {
+                nums.erase(nums.begin() + i);
+                zeroCount++;
+                flag = true;
+            }
+        }
+        
+        for(int i = 0; i < zeroCount; i++)
+        {
+            nums.push_back(0);
+        }
+    }
+};
+```
+First, I thought to get the frequency of zeros and erase the zero value when encountering the nums[i] is 0.
+Second, after deleting all zeros, push_back the zero.
+The flag and size == 0 are conditions to avoid the out-of-range error.
+
+```c++
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int size = nums.size();
+          
+        if(size == 1) 
+            return;
+        
+        int zeroCount = 0;
+        bool flag = false;
+        
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(nums[i]==0)
+            {
+                nums.erase(nums.begin() + i);
+                i--;
+                zeroCount++;    
+            }
+            
+        }
+        
+        for(int i = 0; i < zeroCount; i++)
+        {
+            nums.push_back(0);
+        }
+    }
+};
+```
+The second version is an improved version.
+The first time, I tried this version that deleting the zero number by using nums.begin() + i;
+But when I tried that, I didn't think about the i-- and I used the stored size(line 741).
+If I changed to nums.size() then I don't need to think about the out-of-range error.
