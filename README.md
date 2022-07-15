@@ -767,3 +767,70 @@ The second version is an improved version.
 The first time, I tried this version that deleting the zero number by using nums.begin() + i;
 But when I tried that, I didn't think about the i-- and I used the stored size(line 741).
 If I changed to nums.size() then I don't need to think about the out-of-range error.
+
+*Leetcode - Two sum*
+
+my one
+```c++
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int size = nums.size();
+        for(int i = 0 ; i < size; i ++)
+        { 
+            int findValue = target - nums[i];
+            for(int j = 0; j < size; j++)
+            {
+                if(i == j)
+                    continue;
+                
+                if(nums[j] == findValue)
+                {
+                    return {i,j};
+                }
+            }
+        }
+        return {-1,-1};
+    }
+};
+```
+I used brute force way. 
+Find the findvalue(target = num1 + num2 => num1 = target - num2) from the second for loop and return the vector right away.
+
+another one - using hash map(unordered_map using hash table)
+```c++
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int>mp;
+        int size = nums.size();
+        for(int i = 0; i < size; ++i)
+        {
+            int diff = target - nums[i];
+            if(mp.find(diff)!=mp.end())
+            {
+                return {mp[diff],i};
+            }
+            mp.insert({nums[i],i});
+        }
+        return {};
+    }
+};
+```
+I am not familiar with using a hash map(unorderded_map).
+So after solving the problem using brute force, I tried to solve this problem using the hash map.
+But I failed to find other person's answers and understand the way.
+
+First, if cannot find the diff value(=find value), insert the value({nums[i],i}).
+For example, the nums are [2, 7, 11, 15] and the target value is 9.
+In the first loop(i = 0), there is no value cause it's an empty one so insert the value.
+In this case, the (2,0) will be stored in a map container.
+And when the i = 1, the diff value is 2.
+In the map, there is a value that has a 2(key value) so can enter the if statement.
+And if succeed to find the value, it means it finds the two sums' vector.
+So return the {mp[diff],i}.
+In this case, the returned vector is {mp[2], 1} => { 0, 1 }.
+
+i | num[i] | diff | insert | return      | mp[]
+0 |   2    |  7   |  (2,0) |   X         | (2,0)
+1 |   7    |  2   |    X   | O => {0, 1} | (2,0)
