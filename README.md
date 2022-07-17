@@ -975,3 +975,23 @@ And if there is a number in the (3,0) cell, the box index is 1. => second sub-bo
 After getting a box index, insert the value into the vector array.
 For the row, insert to the y index, and for the column, insert to the x index.
 For the box, just use box_index.
+
+*Leetcode - reverse string*
+
+my one
+```c++
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        for(int i = 0, j = s.size() - 1; i < s.size() / 2; i++, j--)
+        {
+            swap(s[i], s[j]);
+        }
+    }
+};
+```
+Get the two variables to point first and end and just swap two values.
+For example, if the s is [1, 2, 3, 4, 5], i is 0 and j is 4.
+First iteration result is [5, 2, 3, 4, 1].
+Second iteration result is [5, 4, 3, 2, 1].
+The for loop works until s.size() / 2 so the second iteration will be an answer.
