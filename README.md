@@ -834,3 +834,144 @@ In this case, the returned vector is {mp[2], 1} => { 0, 1 }.
 i | num[i] | diff | insert | return      | mp[]
 0 |   2    |  7   |  (2,0) |   X         | (2,0)
 1 |   7    |  2   |    X   | O => {0, 1} | (2,0)
+
+*Leetcode - Valid Sudoku*
+
+my one
+```c++
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        
+        //x check
+        for(int y = 0; y < 9; y++)
+        {
+            unordered_map<char, int> m;
+            for(int x = 0; x < 9; x++)
+            {   
+                if(board[y][x] == '.')
+                    continue;
+
+                m[board[y][x]]++;
+                
+                if(m[board[y][x]] > 1)
+                    return false;
+            }
+            m.clear();
+        }
+        
+        //y check
+        for(int x = 0; x < 9; x++)
+        {
+            unordered_map<char, int> m;
+            for(int y = 0; y < 9; y++)
+            {
+                if(board[y][x] == '.')
+                    continue;
+                
+       
+                m[board[y][x]]++;
+                
+                if(m[board[y][x]] > 1)
+                     return false;
+                     
+            }
+            m.clear();
+        }
+        
+        //grid check
+        int xAdd = 0;
+        int yAdd = 0;
+        int count = 0;
+     
+        while(count != 9)
+        {
+            if(xAdd == 9)
+                xAdd = 0;
+                
+            unordered_map<char, int> m;
+            for(int y = yAdd; y < yAdd + 3; y++)
+            {
+                for(int x = xAdd; x < xAdd + 3; x++)
+                {    
+                    if(board[y][x] == '.')
+                        continue;
+
+                    m[board[y][x]]++;
+                    
+                    if(m[board[y][x]] > 1)
+                        return false;
+                }
+            }
+            count++;
+            m.clear();
+            xAdd += 3;
+            
+            if(count % 3 == 0)
+                yAdd +=3;
+        }
+        
+        return true;
+        
+    }
+};
+```
+I used an unordered_map to know the repetition.
+And separate three conditions into row check, column check, and sub 3x3 check.
+The way that checking repetition is storing values to the m.
+For example, if there is a char '5' in the board[1][1], then the char be the key value and increase the second value if the value exists.
+And, suppose to there is a duplicate char '5' in the board[2][1], this means it is not valid sudoku cause there is a repetition in the same column.
+So the m['5'] = 2. => exceed 1, succed to find duplicate value!
+
+
+another one
+```c++
+bool isValidSudoku(vector<vector<char>>& board) {
+    vector<unordered_set<int>> rows(9, unordered_set<int>());
+    vector<unordered_set<int>> columns(9, unordered_set<int>());
+    vector<unordered_set<int>> boxes(9, unordered_set<int>());
+
+    for (int i = 0; i < 9; ++i) {
+      for (int j = 0; j < 9; ++j) {
+        if (board[i][j] == '.')
+          continue;
+
+        int num = board[i][j] - '0';
+
+        if (rows[i].count(num))
+          return false;
+
+        if (columns[j].count(num))
+          return false;
+
+        // This is a straight-forward math formula to locate a box
+        // Out of the 9 boxes
+        int box_index = (i / 3) * 3 + j / 3;
+
+        if (boxes[box_index].count(num))
+          return false;
+
+        rows[i].insert(num);
+        columns[j].insert(num);
+        boxes[box_index].insert(num);
+      }
+    }
+
+    return true;
+}
+```
+This version used three variables to store columns, rows, and boxes.
+To get the number, check the duplicate values by using the unordered_set's count function.
+The count function returns the number of elements found.
+The unordered_set containers do not allow for duplicate values, this means that the function actually returns 1 if an element with that value exits in the container, and zero otherwise.
+If the return value is 1, then return false cause it's not valid sudoku that has a repetition number in the row or column or box.
+
+And for checking the sub-boxes, using the math formula from this formula, can get the sub-boxes index for the 3x3 box.
+For example,
+if there is a number 5 in the (1,1) cell, the box index is 0.
+After inserting the number, the 5 is stored in the boxes[0]. =>first sub-box's element.
+And if there is a number in the (3,0) cell, the box index is 1. => second sub-box's element.
+
+After getting a box index, insert the value into the vector array.
+For the row, insert to the y index, and for the column, insert to the x index.
+For the box, just use box_index.
