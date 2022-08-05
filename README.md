@@ -995,3 +995,57 @@ For example, if the s is [1, 2, 3, 4, 5], i is 0 and j is 4.
 First iteration result is [5, 2, 3, 4, 1].
 Second iteration result is [5, 4, 3, 2, 1].
 The for loop works until s.size() / 2 so the second iteration will be an answer.
+
+
+*Leetcode - Rotate Image*
+
+my one
+```c++
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        
+        for(int i = 0; i < matrix.size(); i++)
+        {
+            for(int j = i + 1, index = i + 1; j < matrix.size(); j++, index++)
+            {
+                swap(matrix[i][j], matrix[index][i]);
+            }
+            
+        }
+        
+        for(int i = 0; i < matrix.size(); i++)
+        {
+            reverse(matrix[i].begin(), matrix[i].end());
+        }
+    }
+};
+```
+I didn't solve this problem on my own so I searched for this problem and how to solve it.
+First, the first column matrix transposes the row matrix.
+For example, if the matrix is 
+[1 2 3 4]
+[5 6 7 8]
+[9 10 11 12]
+[13 14 15 16], the first column is [1,5,9,13] and make this column to row then the result be
+
+[1 5 9 13]
+[2 6 7 8]
+[3 10 11 12]
+[4 14 15 16].
+
+This operation applies to all columns then the final result be
+[1 5 9 13]
+[2 6 10 14]
+[3 7 11 15]
+[4 8 12 16].
+
+After gaining this result, reverse this matrix.
+[13 9 5 1]
+[14 10 6 2]
+[15 11 7 3]
+[16 12 8 4].
+I can get the result.
+
+I think I'm not good at solving the in-placea problem.
+Need to practice more problems.
