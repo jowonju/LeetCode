@@ -1049,3 +1049,103 @@ I can get the result.
 
 I think I'm not good at solving the in-placea problem.
 Need to practice more problems.
+
+*Leetcode - Reverse integer*
+
+```c++
+class Solution {
+public:
+    int reverse(int x) {
+        int max = std::numeric_limits<int>::max();
+        int min = std::numeric_limits<int>::min();
+        
+        int result = 0;
+        bool flag = false;
+        
+        string str = to_string(x);
+        
+        if(x < 0)
+        {
+            flag = true;
+            str.erase(str.begin());
+        }
+        
+        int stringSize = str.size();
+        int checkingValue = 0;
+        
+        for(int i = stringSize - 1; i >= 0; --i)
+        { 
+            int integer = str[i] - 48;
+                        
+            if(i > 8 && integer > 2)
+                return 0;
+            
+            if(i == 0 && integer == 0)
+            {
+                break;
+            }
+            
+            int multipliedValue = pow(10, i);
+            checkingValue = max - result;
+            
+            if(multipliedValue * integer > checkingValue)
+                return 0;
+            
+            result += integer * multipliedValue;
+        }
+        
+        if(flag)
+            result *= -1;
+        
+        return result;
+    }
+};
+```
+I thought it needs to convert the integer value to a string value.
+So I used the to_string() function => it converts an integer value to a string value like 123 -> "123". 
+And for getting the integer value from the string, subtract 48(the decimal value of the char '0') to each string element cause I just need numbers 0 to 9.
+For a negative value, I checked the value at the beginning, so if the condition is met(x < 0) then multiply -1 to the resulting number.
+Also, I need to check the integer range.
+If the reversed integer value exceeds the int range([-2^31, 2^31 -1]), it causes an error. 
+For checking the range, I used the checking variable.  
+```c++
+            checkingValue = max - result;
+            
+            if(multipliedValue * integer > checkingValue)
+                return 0;
+```
+The max - result value is stored in the checking value.
+If the multipliedValue * integer value exceeds the checking value, it means the addedValue causes the range error.
+For example, suppose an example value is 2147483651. This value exceeds the maximum value of 51.
+So in that example, the checking value is 47 and the added value is 50. Added value is greater than the checking value, returned 0.
+
+another one
+```c++
+
+class Solution {
+public:
+    int reverse(int x) {
+        int res = 0;
+        while(x){
+            if(res > INT_MAX/10 || res < INT_MIN/10)
+                return 0;
+            res = res*10 + x%10;
+            x /= 10; 
+        }
+        return res;
+    }
+};
+```
+I found a clever solution to this problem.
+The (number % 10) gives the last digit number.
+For example, if the value is 123 then the value % 10 is 3 -> the last digit.
+So if using that calculation, I can get the reversed number.
+Suppose an example number is 123.
+
+iteration | x % 10 |   x    | res |
+    0     |   -    |   -    | 0   |
+    1     |   3    |   123  | 3   |
+    2     |   2    |   12   | 32  |
+    3     |   1    |   1    | 321 |
+
+For the range check, using res > INT_MAX/10 and res < INT_MIN / 10.
