@@ -1149,3 +1149,60 @@ iteration | x % 10 |   x    | res |
     3     |   1    |   1    | 321 |
 
 For the range check, using res > INT_MAX/10 and res < INT_MIN / 10.
+
+*leetcode - First unique character in a string*
+
+```c++
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<char, int> um;
+        for(auto str : s)
+        {
+            um[str]++;
+        }
+        
+        bool flag = false;
+        for(auto iter : um)
+        {
+            if(iter.second % 2 == 1) //if met the conditon even once, it means need to return the index
+            {
+                flag = true;
+            }
+        }
+        
+        if(!flag)
+            return -1;
+        else{
+            int minimumIndex = s.size() - 1;
+            bool check = false;
+            for(auto iter : um)
+            {
+                if(iter.second ==  1)
+                {
+                    check = true;
+                    int index = s.find(iter.first);
+                    if(minimumIndex > index)
+                        minimumIndex = index;
+                }
+            }
+            
+            if(!check)
+                return -1;
+            
+            return minimumIndex;
+        }
+        
+    }
+};
+```
+
+I used an unordered_map for counting the chars of the string.
+After counting chars, I classified conditions to know whether the string is repeated or not.
+If the second value's remainder is 0, it means the string is repeated because it's an even, on the other hand, it needs to return the first non-repeating index.
+However, there is a case where the string is repeated even if all second values are odd.
+Suppose the string is aabbbaa, it is a repeated string so also need to consider this situation.
+So I added the iter.second == 1 if statement.
+It can filter that odd repeated situations. 
+I solved this problem but am not sure it is a clever way to solve this problem. 
+So I will find other answers.
