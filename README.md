@@ -1227,5 +1227,6 @@ public:
 ```
 Maybe I thought too hard. 
 I can get the second value by m[s[i]].
+The first value is the key in the map and I stored the key value from the string, so if just using the string s as finding a value, it is so easy to find the first unique value.
 So if I check the value from the first element of the string to the end, I can get the first unique char value.
 I am not familiar with using the [] operator of the map so this problem is good to practice about using the map.
