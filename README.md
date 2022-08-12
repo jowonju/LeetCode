@@ -1206,3 +1206,26 @@ So I added the iter.second == 1 if statement.
 It can filter that odd repeated situations. 
 I solved this problem but am not sure it is a clever way to solve this problem. 
 So I will find other answers.
+
+another one
+```c++
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<char, int> m;
+        for (char& c : s) {
+            m[c]++;
+        }
+        for (int i = 0; i < s.size(); i++) {
+            if (m[s[i]] == 1) return i;
+        }
+        return -1;
+    }
+};
+
+```
+Maybe I thought too hard. 
+I can get the second value by m[s[i]].
+So if I check the value from the first element of the string to the end, I can get the first unique char value.
+I am not familiar with using the [] operator of the map so this problem is good to practice about using the map.
