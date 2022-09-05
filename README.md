@@ -1230,3 +1230,71 @@ I can get the second value by m[s[i]].
 The first value is the key in the map and I stored the key value from the string, so if just using the string s as finding a value, it is so easy to find the first unique value.
 So if I check the value from the first element of the string to the end, I can get the first unique char value.
 I am not familiar with using the [] operator of the map so this problem is good to practice about using the map.
+
+*leetcode - Valid Anagram*
+
+my one
+```c++
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        unordered_map<char, int> u_map1;
+        unordered_map<char, int> u_map2;
+        
+        for(char str : s)
+        {
+            u_map1[str]++;
+        }
+        
+        for(char str : t)
+        {
+            u_map2[str]++;
+        }
+        
+        if(u_map1.size() != u_map2.size())
+            return false;
+            
+        for(auto iter = u_map1.begin(); iter != u_map1.end(); iter++)
+        {
+            if(iter->second != u_map2[iter->first])
+                return false;
+        }
+        
+        return true;
+    }
+};
+```
+I used the hash map(unordered_map) for getting letters frequency of the string.
+After getting the map value(two for loops), I used a iteration for checking the value is same.
+
+another one
+```c++
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        
+        if(s.size() != t.size())
+            return false;
+        
+        unordered_map<char, int> u_map1;
+        unordered_map<char, int> u_map2;
+        
+        for(int i = 0; i < s.size(); i++)
+        {
+            u_map1[s[i]]++;
+            u_map2[t[i]]++;
+        }
+            
+        for(auto iter = u_map1.begin(); iter != u_map1.end(); iter++)
+        {
+            if(iter->second != u_map2[iter->first])
+                return false;
+        }
+        
+        return true;
+    }
+};
+```
+My one used two for loops for getting the value but this one just used one for loop.
+If two strings length is not same, I don't need to think about setting the hash map.
+So just using string's size function, I can set up the hash map.
