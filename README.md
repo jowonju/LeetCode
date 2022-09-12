@@ -1024,24 +1024,24 @@ public:
 I didn't solve this problem on my own so I searched for this problem and how to solve it.
 First, the first column matrix transposes the row matrix.
 For example, if the matrix is 
-[1 2 3 4]
-[5 6 7 8]
-[9 10 11 12]
+[1  2  3  4]
+[5  6  7  8]
+[9  10 11 12]
 [13 14 15 16], the first column is [1,5,9,13] and make this column to row then the result be
 
-[1 5 9 13]
-[2 6 7 8]
+[1 5  9  13]
+[2 6  7  8]
 [3 10 11 12]
 [4 14 15 16].
 
 This operation applies to all columns then the final result be
-[1 5 9 13]
+[1 5 9  13]
 [2 6 10 14]
 [3 7 11 15]
 [4 8 12 16].
 
 After gaining this result, reverse this matrix.
-[13 9 5 1]
+[13 9  5 1]
 [14 10 6 2]
 [15 11 7 3]
 [16 12 8 4].
