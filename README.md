@@ -1298,3 +1298,105 @@ public:
 My one used two for loops for getting the value but this one just used one for loop.
 If two strings length is not same, I don't need to think about setting the hash map.
 So just using string's size function, I can set up the hash map.
+
+*Leetcode - Valid Palindrome*
+
+my one
+```c++
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        
+        string container;
+        for(int i = 0; i < s.length(); i++)
+        {
+            if(s[i] >= 65 && s[i] <= 90) // if a char is a upper alphabet, convert to lower alphabet
+            {
+                container.push_back(s[i] + 32);
+            }    
+            if(s[i] >= 48 && s[i] <= 57) // if a char is a number
+            {
+                container.push_back(s[i]);
+            }  
+            else if(s[i] >= 97 && s[i] <= 122){ // non-alphabet -> delete
+                container.push_back(s[i]);
+            }
+        }
+        
+        string str(container);
+        reverse(str.begin(), str.end());
+
+        for(int i = 0; i < container.length(); i++)
+        {
+            if(str[i] != container[i])
+                return false;
+        }
+            
+        return true;
+    }
+};
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        
+        for(int i = 0; i < s.length(); i++)
+        {
+            if(s[i] >= 'A' && s[i] <= 'Z') // if a char is a upper alphabet, convert to lower alphabet
+            {
+                s[i] += 32;
+            }    
+            else if(s[i] < 'a' || s[i] > 'z') { // non-alphabet -> delete
+                
+                if(s[i] >= '0' && s[i] <= '9')
+                    continue;
+                
+                s.erase(s.begin() + i);
+                i--;
+            }
+        }
+        
+        int size = s.length() / 2;
+        for(int i = 0, j = s.length() - 1; i < size; i++, j--)
+        {
+            if(s[i] != s[j])
+                return false;
+        }
+            
+        return true;
+    }
+};
+```
+The first one uses additional containers(string) and reverse.
+Only push back lower and number chars, and assign a new string to reversed container string.
+And comparing each char of both.
+The second one does not assign additional memory allocation, just modifies the original input string.
+After modifying the string, use two variables (start from first to end, start from end to first) for comparison.
+
+another one
+```c++
+bool isPalindrome(string s) {
+    int start=0, end=s.length()-1;
+    while(start<end) {
+        if (!isalnum(s[start])) start++;
+        else if (!isalnum(s[end])) end--;
+        else {
+            if (tolower(s[start++])!=tolower(s[end--])) return false;
+        }
+    }
+    return true;
+}
+```
+The above code uses two pointers.
+The first pointer is the beginning of the string and the second pointer is the end of the string.
+
+FYI
+isalnum(): return true if the char is alphabet or number, otherwise return false.
+tolower(): convert the upper alphabet to the lower alphabet.
+
+if the start index value is not alphabetical or number then don't need to check that, so increase by 1.
+Likewise, the second else if statement is the same, but decreases by 1.
+The last else statement is checking the alphabet using the tolower function.
+If the start index and end index values are not the same, it means it is not a Valid Palindrome.
+
+I didn't know two functions(isalnum, tolower), so it's a worth problem because of the two functions and how to use the two pointers.
