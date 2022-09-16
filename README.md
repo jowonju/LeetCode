@@ -1400,3 +1400,204 @@ The last else statement is checking the alphabet using the tolower function.
 If the start index and end index values are not the same, it means it is not a Valid Palindrome.
 
 I didn't know two functions(isalnum, tolower), so it's a worth problem because of the two functions and how to use the two pointers.
+
+*Leetcode - string to interger(atoi)*
+my one
+```c++
+class Solution {
+public:
+    
+    int CheckWhitespace(string s)
+    {
+        int result = 0;
+        int i = 0;
+        while(true)
+        {
+            if(s[i]==' ')
+                result++;
+            
+            if(s[i] != ' ')
+                return result;
+            
+            i++;
+        }
+    }
+    
+    void CheckingTwoStep(bool& negative, int& i, string inputString, string& str_){  
+        
+        if(inputString[i] == ' ')
+        {
+            i = CheckWhitespace(inputString);
+        }
+        
+        if(inputString[i] == '-' || inputString[i] == '+')
+        {
+            if(inputString[i] == '-')
+            {
+                negative = true;
+                str_.push_back('-');
+            }
+            else{
+                str_.push_back('+');
+            }
+            i++;
+                
+        }
+    }
+    
+    int myAtoi(string s) {
+
+        int result = 0;
+        int i = 0;
+        int size = s.length();
+        string str;
+        bool negative = false;
+        
+        CheckingTwoStep(negative, i, s, str);
+        
+        while(i < size)
+        {          
+            if(s[i] >= '0' && s[i] <= '9') // check it is digit
+            {
+                str.push_back(s[i]);
+            }
+            else{
+                i = size;
+            }
+            
+            i++;
+        }
+        
+        
+        for(int i = 0; i < str.length(); i++)
+        {
+            if(str[i] == '-' || str[i] == '+')
+                continue;
+            
+            if(str[i] == '0')
+            {
+                str.erase(str.begin() + i);
+                i--;
+            }
+            else{
+                i = str.length();
+            }
+                
+        }
+        
+        int finalSize = str.length();
+        for(int i = finalSize, j = 0; i > 0; i--, j++)
+        {
+            if(str[i - 1] == '-' || str[i-1] == '+')
+            {
+                continue;
+            }
+                
+            if(negative)
+            {               
+ 
+                if(j > 9)
+                    return INT_MIN;
+                
+                int pop = -((int)(str[i - 1]) - 48);
+                
+                if(j == 9 && pop < -2)
+                    return INT_MIN;
+                
+                int addedAmount = pop * pow(10, j);
+                
+                if(result < (INT_MIN - addedAmount))
+                {
+                    return INT_MIN;   
+                }
+                
+                result += addedAmount;
+            }
+            else{
+                
+                if(j > 9)
+                    return INT_MAX;
+                
+                int addedAmount = 0;
+                int pop = ((int)(str[i - 1]) - 48);
+                
+                if(j == 9 && pop > 2)
+                    return INT_MAX;
+                
+                addedAmount += pop * pow(10 , j);
+                
+                if(result > INT_MAX - addedAmount)
+                {
+                    return INT_MAX;   
+                }
+                
+                result += addedAmount;
+ 
+            }
+        }
+        
+        return result;
+        
+    }
+};
+```
+I used an additional memory allocation for getting the string that only contains digit chars.
+First, I created a helper function for checking cases that ignore leading whitespaces and signs(+ or -).
+After through the helper function, read digit chars if encountered a non-digit char move out of the for loop.
+For converting chars to integers, I used the pow function and set up the start index at the end of the string.
+For the range check, if the j value exceeds 9 return INT_MAX or INT_MIN.
+Using the INT_MAX - addedAmount for preventing the result value exceeds the 32-bit integer overflow value.
+
+I could solve this problem but I'm not sure this is a good way to solve it.
+
+another one
+```c++
+class Solution {
+public:
+   
+    int myAtoi(string s) {
+  
+        // helper variables
+        int res=0;
+        int i=0;
+        int sign=1;
+        
+        while(i<s.size()&&s[i]==' ')i++;  //ignore leading white space
+        
+        if(s[i]=='-'||s[i]=='+')          //check if number positve or negative
+        {
+            sign=s[i]=='-'?-1:1;
+            i++;
+        }
+        // now iterate across digits if any
+        // should only be in range 0-9
+        while(i<s.length()&&(s[i]>='0'&&s[i]<='9'))  //traverse string till nondigit not found or string ends
+        {
+            int digit=(s[i]-'0')*sign;
+            if(sign==1 && (res>INT_MAX/10 || (res==INT_MAX/10 && digit>INT_MAX%10))) return INT_MAX; //check for overflow
+            if(sign==-1 &&(res<INT_MIN/10 || (res==INT_MIN/10 && digit<INT_MIN%10))) return INT_MIN; //check for underflow
+            
+            res=res*10+digit; // update res
+            i++;
+        }
+    
+    return res;
+    }
+};
+```
+For checking leading white spaces and signs are similar but the most different is dealing with the overflow.
+I saw others using the equation(res = res x 10 + digit;) to get the integer.
+I really need to familiarize myself with that equation for later.
+```c++
+(res == INT_MAX / 10 && digit > INT_MAX % 10)
+```
+The above equation means the last digit greater than the last digit of an integer maximum value.
+For example, if the value is 2147483649, the last digit value is greater than the last digit of a maximum integer so success to check the overflow.
+```c++
+(res>INT_MAX/10)
+```
+The above equation checks the result that after addition causes the overflow.
+For example, if the value is 6541237895, the statement works when comparing between 65412378 and 214748364.
+Because the first one is greater than the maximum value it causes overflow so return INT_MAX.
+
+
