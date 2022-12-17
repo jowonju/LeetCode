@@ -1601,3 +1601,21 @@ For example, if the value is 6541237895, the statement works when comparing betw
 Because the first one is greater than the maximum value it causes overflow so return INT_MAX.
 
 
+*Leetcode - Longest Common Prefix*
+
+```c++
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        if (strs.empty()) return "";
+        for (int len = 0; ; ++len) {
+            char c = strs.front()[len];
+            for (auto& s: strs)
+                if (s.size() <= len || s[len] != c)
+                    return strs.front().substr(0, len);
+        }
+    }
+};
+```
+This answer uses the substr function for solving this problem.
+Use substr function if the size is less than the index and the compared value is not matched with the compare value.
