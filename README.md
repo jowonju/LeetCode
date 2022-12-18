@@ -1619,3 +1619,37 @@ public:
 ```
 This answer uses the substr function for solving this problem.
 Use substr function if the size is less than the index and the compared value is not matched with the compare value.
+
+*Leetcode - Delete Node in a Linked List*
+
+```c++
+class Solution {
+public:
+    void deleteNode(ListNode* node) {
+        
+        for(ListNode* nodePtr = node; nodePtr != nullptr; nodePtr  = nodePtr->next)
+        {
+            nodePtr->val = nodePtr->next->val;
+            
+            if(nodePtr->next->next == nullptr)
+            {
+                nodePtr->next = nullptr;
+                break;
+            }
+        }
+        
+    }
+    
+};
+```
+In this problem, access to the head node is not provided.
+So I used the way that copies the next node value of the current node to the current node.
+I can pass all test cases, but the runtime and memory are not good.
+
+another one
+```c++
+void deleteNode(ListNode* node) {
+    *node = *node->next;
+}
+```
+Just let the given node point to the next node of the current node.
