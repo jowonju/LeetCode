@@ -1653,3 +1653,84 @@ void deleteNode(ListNode* node) {
 }
 ```
 Just let the given node point to the next node of the current node.
+
+*Leetcode - Remove Nth Node From End of List*
+
+```c++
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        
+          int totalSize = 0;
+        for(auto ptr = head; ptr!=nullptr; ptr = ptr->next)
+        {
+            totalSize++;
+        }
+        
+        if(totalSize == 1)
+        {
+            return NULL;    
+        }
+        
+        int indexFromBeginning = totalSize - n;
+        
+        ListNode* temp = NULL;
+        ListNode* ptr = head;
+        
+        if(indexFromBeginning == 0)
+        {
+            *head = *head->next;
+            return head;
+        }
+        
+        while(indexFromBeginning > 0)
+        {
+            temp = ptr;
+            ptr = ptr->next;
+            indexFromBeginning--;
+        }
+        temp->next = ptr->next;
+        
+        
+       return head;
+    }
+};
+```
+First, need to get the list size and target index(indexFromBeginning) by list size.
+After getting both, declare the ListNode dummy variable (to get a previous node of a deleted node) and ptr(pointing to the head node).
+Make a for loop to iterate that until the index becomes 0.
+If the index value is less than 0, make the temp's next be ptr->next;
+For example, the inputs are [1,2,3,4,5] and n is 2.
+The temp node be 3 and the ptr be 4, so after temp->next = ptr->next
+the linked list will be 1->2->3->5.
+
+another one
+```c++
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+
+    ListNode* node = head, *offsetNode = head;
+    for (int i = 0; i < n; ++i)
+        node = node->next;
+    
+    // if node is NULL n is equal to the length of the linked list and we have to remove the head
+    if (node == NULL)
+        return head->next;
+    
+    while (node->next != NULL) {
+        node = node->next;
+        offsetNode = offsetNode->next;
+    }
+    
+    offsetNode->next = offsetNode->next->next;
+    
+    return head;
+}
+```
+It's a way to use two-pointers.
+First, getting a node that stays away by n.
+And make the node reaches until end fo the list.
+Suppose the input is [1,2,3,4,5] and 2.
+After the while loop, the node will be 5 and the offsetnode will be 3.
+Then make offsetnode's next node be offsetnode's next->next node.
