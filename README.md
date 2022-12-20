@@ -1734,3 +1734,68 @@ And make the node reaches until end fo the list.
 Suppose the input is [1,2,3,4,5] and 2.
 After the while loop, the node will be 5 and the offsetnode will be 3.
 Then make offsetnode's next node be offsetnode's next->next node.
+
+*Leetcode - Reverse Linked List*
+my one
+```c++
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        
+        if(head==nullptr)
+            return NULL;
+        
+        stack<int> st;
+        
+        for(auto ptr = head; ptr != nullptr; ptr = ptr->next)
+        {
+            st.push(ptr->val);
+        }
+        
+        for(auto ptr = head; ptr != nullptr; ptr = ptr->next)
+        {
+            ptr->val = st.top();
+            st.pop();
+        }
+
+        return head;
+    }
+};
+```
+I used a stack container.
+Push the list's value to the stack and get the last value by top() and change the node's value to that.
+
+```c++
+//Iteratively
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *nextNode, *prevNode = NULL;
+        while (head) {
+            nextNode = head->next;
+            head->next = prevNode;
+            prevNode = head;
+            head = nextNode;
+        }
+        return prevNode;
+    }
+};
+
+//Recursively
+class Solution {
+public:
+    ListNode* reverseList(ListNode *head, ListNode *nextNode = NULL, ListNode *prevNode = NULL) {
+        return head ? reverseList(head->next, (head->next = prevNode, nextNode), head) : prevNode;
+    }
+};
+```
+Using three variable, previous node, current node and next node.
+The previous note points to previous node of the current node and the next node points to the next node of the current node.
+First, initialize the previous and next node to null.
+and make the current node points to the previous node, it means that chaning the direction.
+And assign the previous node to the current node and the head to the next node.
+https://leetcode.com/explore/featured/card/top-interview-questions-easy/93/linked-list/560/discuss/803955/C++-Iterative-vs.-Recursive-Solutions-Compared-and-Explained-~99-Time-~85-Space?page=1
+It's hard to explain using sentence. The above link's gif shows it well.
+
+
+
