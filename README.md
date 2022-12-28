@@ -1908,3 +1908,27 @@ Using the prev variable(points to the previous node of the current node) and tem
 After while loop, the list will be from 1 -> 6 -> 4 -> 5 -> 4 -> 6 -> 1 to 1 -> 6 -> 4 -> 5 <- 4 <- 6 <- 1.
 Lastly, make the slow pointer point to the last and the fast pointer point to the head.
 And compare the values if the value is not equal the list is not a palindrome. 
+
+*Leetcode - Linked List Cycle*
+```c++
+class Solution {
+public:
+    bool hasCycle(ListNode* head) {
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while (fast != nullptr && fast->next !=nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (fast == slow)
+                return true;
+        }
+        return false;
+        
+    }
+};
+
+```
+Using two pointers for checking the list is cycled.
+The fast pointer points to next next node of the current node and the slow node point to the next node of the current node.
+The fast->next is for checking the odd-size list.
