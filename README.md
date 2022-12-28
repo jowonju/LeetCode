@@ -1797,5 +1797,114 @@ And assign the previous node to the current node and the head to the next node.
 https://leetcode.com/explore/featured/card/top-interview-questions-easy/93/linked-list/560/discuss/803955/C++-Iterative-vs.-Recursive-Solutions-Compared-and-Explained-~99-Time-~85-Space?page=1
 It's hard to explain using sentence. The above link's gif shows it well.
 
+*Leetcode - Merge two sorted lists*
 
+```c++
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        
+        ListNode result;
+        ListNode* tail = &result;
+        
+        while(list1 != nullptr && list2 != nullptr)
+        {
+            if(list1->val <= list2->val)
+            {
+                tail->next = list1;        
+                list1 = list1->next;
+            }
+            else if(list1->val > list2->val) 
+            {
+                tail->next = list2;        
+                list2 = list2->next;
+                
+            }
+            tail = tail->next;
+        }
+        
+        if(list1 !=nullptr)
+            tail->next = list1;
+        else
+            tail->next = list2;
+        
+        return result.next;
+    }
+};
+```
+Using a dummy for solving. 
+First create a dummy node and make a tail node that points to the last node of dummy.
+And create a while loop for checking each lists' value.
+Make the tail's next node point to a less value node.
+And make the tail's next node to non-nullptr node of list1 or list2 because the previous while loop ends at the previous node of the end of the list.
 
+*Leetcode - Palindrome Linked List*
+```c++
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+
+        //using another data container. time complexity: O(n), space complexity: 
+        stack<int> stk;
+        
+        for(auto ptr = head; ptr != nullptr; ptr = ptr->next)
+        {
+            stk.push(ptr->val);
+        }
+        
+        int size = stk.size();
+        
+        for(int i = 0; i < size / 2; i++)
+        {
+            if(head->val != stk.top())
+                return false;
+            
+            stk.pop();
+            head = head->next;
+        }
+        return true;
+        
+        //Floyd's Cycle Detection Algorithm. space complexity:O(1) time complexity: O(N)
+        ListNode* fast = head, *slow = head, *prev, *temp;
+        
+        while(fast && fast->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        prev = slow; slow=slow->next; prev->next = NULL;
+        while(slow)
+        {
+            temp = slow->next;
+            slow->next = prev;
+            prev = slow;
+            slow = temp;
+        }
+        
+        slow = prev; fast = head;
+        while(slow)
+        {
+            if(slow->val != fast->val)
+                return false;
+            slow = slow->next;
+            fast = fast->next;
+        }
+        
+        return true;
+    }
+};
+```
+The first way is just using another data container to copy the list's values.
+And compare the values using the container.
+
+The second way is using Floyd's Cycle Detection Algorithm.
+The algorithm uses two pointers, fast and slow, and these pointers have different speeds. 
+If the fast pointer reaches the end of the list, the slow pointer must point to the middle of the list.
+
+For example, if the input is [1,6,4,5,4,6,1], the fast pointer points to 1 and the slow pointer points to 5.
+Because the slow pointer is in the middle of the list, I can make the back half of the list reverse.
+Using the prev variable(points to the previous node of the current node) and temp variable(points to the next variable of the current node) makes the list reverse.
+After while loop, the list will be from 1 -> 6 -> 4 -> 5 -> 4 -> 6 -> 1 to 1 -> 6 -> 4 -> 5 <- 4 <- 6 <- 1.
+Lastly, make the slow pointer point to the last and the fast pointer point to the head.
+And compare the values if the value is not equal the list is not a palindrome. 
