@@ -130,6 +130,7 @@ And I think this part
 return max(maxDepth(root->right),maxDepth(root->left))+1;
 ``` 
 is RVO, so the runtime reduced. Also, using the algorithm function reduces the runtime, but I don't know the reason(6/4).
+Helpful link for understanding the recursion timeline: https://www.youtube.com/watch?v=YT1994beXn0
 
 *leetcode 614*
 >code
