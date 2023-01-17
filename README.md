@@ -1933,3 +1933,66 @@ public:
 Using two pointers for checking the list is cycled.
 The fast pointer points to next next node of the current node and the slow node point to the next node of the current node.
 The fast->next is for checking the odd-size list.
+
+
+*Leetcode - Binary Tree Level Order Traversal*
+```c++
+  vector<vector<int>> vec;
+        
+        if(root == nullptr)
+            return vec;
+        
+        queue<TreeNode*> que;
+        que.push(root);
+        
+        while(!que.empty())
+        {
+            vector<int> vec2;
+            int size = que.size();
+            
+            for(int i = 0; i < size; i++)
+            {
+                TreeNode* node = que.front();
+            
+                if(node->left != nullptr)
+                    que.push(node->left);
+                if(node->right != nullptr)
+                    que.push(node->right);
+                
+                vec2.push_back(node->val);
+                que.pop();
+            }
+            
+            vec.push_back(vec2);
+        }
+        
+        return vec;
+```
+Using a queue for the level order traversal. (BFS)
+Push back the vector after the for loop.
+The for loop range is based on the queue size. 
+It's good practice for learning the bfs in the binary tree.
+
+```c++
+private:
+    void recursion(TreeNode* root, int level, vector<vector<int>>& result) {
+        if (!root) return;
+        if (result.size() == level) {
+            // add new vector to the result for new level
+            result.push_back(vector<int>());
+        }
+        result[level].push_back(root->val);
+        recursion(root->left, level + 1, result);
+        recursion(root->right, level + 1, result);
+    }
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> result;
+        recursion(root, 0, result);
+        return result;
+    }
+    
+```
+Using a additional function take level and result parameters.
+If result's size is same as the level, add new vector to the result for new level.
+
