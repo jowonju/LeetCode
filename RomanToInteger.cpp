@@ -43,6 +43,47 @@ public:
         result += dictionary.find(copy[size-1])->second;
         return result;
 
+        int result = 0;
+        map<char, int> dictionary = { { 'I' , 1 },
+                                      { 'V' , 5 },
+                                      { 'X' , 10 },
+                                      { 'L' , 50 },
+                                      { 'C' , 100 },
+                                      { 'D' , 500 },
+                                      { 'M' , 1000 } 
+                                    };
+        
+        
+        for(int i = 0 ; i < s.length(); i++)
+        {
+            if((dictionary[s[i + 1]] - dictionary[s[i]]) / 4 == dictionary[s[i]] || 
+               (dictionary[s[i + 1]] - dictionary[s[i]]) / 9 == dictionary[s[i]])
+            {
+                result += dictionary[s[i + 1]] - dictionary[s[i]];
+                i++;
+            }
+            else{
+                result += dictionary[s[i]];
+            }
+        }
+        
+        return result;
+
+        //Just subtract the current number if the next element is greater than the current element.
+        for(int i = 0 ; i < s.length(); i++)
+        {
+            if(dictionary[s[i]] < dictionary[s[i+1]])
+            {
+                result -= dictionary[s[i]];
+            }
+            else{
+                result += dictionary[s[i]];
+            }
+        }
+        
+        return result;
+        
+
         
     }
 };

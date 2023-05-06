@@ -17,6 +17,28 @@ public:
     	}
     	
         return result;
+
+        //version 2
+        int result = 0;
+        int compare = 1;
+
+        while (compare <= (x ^ y))
+        {
+            int calculation = (x ^ y) & compare;
+
+            if (calculation != 0)
+                result++;
+            
+            if (compare == INT_MAX / 2 + 1)
+            {
+                break;
+            }
+
+            compare = compare << 1;
+        }
+
+        return result;
+
     }
 };
 
