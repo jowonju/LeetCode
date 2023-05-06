@@ -1934,7 +1934,6 @@ Using two pointers for checking the list is cycled.
 The fast pointer points to next next node of the current node and the slow node point to the next node of the current node.
 The fast->next is for checking the odd-size list.
 
-
 *Leetcode - Binary Tree Level Order Traversal*
 ```c++
   vector<vector<int>> vec;
@@ -1996,3 +1995,77 @@ public:
 Using a additional function take level and result parameters.
 If result's size is same as the level, add new vector to the result for new level.
 
+*Leetcode - Min Stack*
+```c++
+class MinStack {
+public:
+
+    //Using two stacks
+    MinStack() {
+    }
+    
+    void push(int val) {
+        if(minStk.size() > 0 && minStk.top() >= val)
+        {
+            minStk.push(val);
+        }
+            
+        
+        if(stk.size() < 1)
+        {
+            minStk.push(val);
+        }
+        
+        stk.push(val);
+    }
+    
+    void pop() {
+        if(stk.top() == minStk.top())
+        {
+            minStk.pop();
+        }
+        stk.pop();
+    }
+    
+    int top() {
+        return stk.top();
+    }
+    
+    int getMin() {
+        return minStk.top();
+    }
+    
+private:
+    std::stack<int> minStk;
+    std::stack<int> stk;
+};
+
+```
+Using two stacks for solving this problem. One stack is for the main stack and the another one is for the tracking the mininum value.
+Pusing a value to the min stack when min stack's top value is greater than current minimum value.
+Then I can get the minimum value's history and the minimum value by using a top() function.
+
+*Leetcode - Power of Three*
+```c++
+        //Method 1 - Loop iteration
+        if(n <= 1)
+            return false;
+        
+        while(n % 3 == 0)
+        {
+            n /= 3;
+        }
+        
+        return n == 1;
+
+        //Method 2 - Using log function
+        return n > 0 && 1162261467 % n == 0;
+```
+The first method is that using loop iteration.
+This problem needs to check the number is the power of three.
+So I used the modulo operator(n % 3 == 0) for the while condition statement.
+If the number is the divisor, divide 3 by the number.
+And for a final check to the number is the power of the 3, just using  == operator(n == 1).
+
+The second method is using the math function(log).
+This method needs to use a certain magic number because the number is the largest number of the power of 3 less than 2^31(the largest number of the integer data type). => 3^(log3(2^31 - 1)) = 3^19 = 1162261467.
