@@ -2069,3 +2069,91 @@ And for a final check to the number is the power of the 3, just using  == operat
 
 The second method is using the math function(log).
 This method needs to use a certain magic number because the number is the largest number of the power of 3 less than 2^31(the largest number of the integer data type). => 3^(log3(2^31 - 1)) = 3^19 = 1162261467.
+
+
+*Leetcode - Reverse Bits*
+
+```c++
+ uint32_t reverseBits(uint32_t n) {
+        
+        n = ((n & 0xffff0000) >> 16) | ((n & 0x0000ffff) << 16);
+        n = ((n & 0xff00ff00) >> 8) | ((n & 0x00ff00ff) << 8);
+        n = ((n & 0xf0f0f0f0) >> 4) | ((n & 0x0f0f0f0f) << 4);
+        n = ((n & 0xcccccccc) >> 2) | ((n & 0x33333333) << 2);
+        n = ((n & 0xaaaaaaaa) >> 1) | ((n & 0x55555555) << 1);
+        
+        return n;        
+}
+```
+Using the divide and conquer idea for this problem.
+If the number is 12345678 and want to reverse the number(87654321) there will be three steps.
+The steps are 4-4 each, 2-2 each, and 1-1 each.
+
+1.
+1234 | 5678 ==> 5678 | 1234
+
+2.
+56 | 78 | 12 | 34 ==> 78 | 56 | 34 | 12
+
+3. 
+7 | 8 | 5 | 6 | 3 | 4 | 1 | 2 => 8 | 7 | 6 | 5 | 4 | 3| 2 | 1
+
+For completing the above steps, the mask variable will be needed.
+4-4 each <= 0xf0, 0x0f (1111'0000, 0000'1111)
+2-2 each <= 0xcc, 0x33 (1100'1100, 0011'0011)
+1-1 each <= 0xaa, 0x55 (1010'1010, 0101'0101)
+
+If the given bit is 0001'0111, the reversed bit will be 1110'1000.
+
+4-4 each)
+  0001'0111
+& 1111'0000
+------------ -
+  0001'0000 -> let right shift 4 times for getting right position => 0000'0001
+
+  0001'0111
+& 0000'1111
+------------ -
+  0000'0111 -> let left shift 4 times for getting right position => 0111'0000
+
+result
+  0000'0001
+| 0111'0000
+----------- -
+  0111'0001
+
+2-2 each)
+  0111'0001
+& 1100'1100
+------------ -
+  0100'0000 -> let right shift 2 times for getting right position => 0001'0000
+
+  0111'0001
+& 0011'0011
+------------ -
+  0011'0001 -> let left shift 2 times for getting right position => 1100'0100
+
+result
+  0001'0000
+| 1100'0100
+------------ -
+  1101'0100
+
+1-1 each)
+  1101'0100
+& 1010'1010
+------------ -
+  1000'0000 -> let right shift 1 times for getting right position => 0100'0000
+
+  1101'0100
+& 0101'0101
+------------ -
+  0101'0100 -> let left shift 1 times for getting right position => 1010'1000
+
+result)
+  0100'0000
+| 1010'1000
+------------ -
+  1110'1000
+
+After those stpes, the bit is reversed!
