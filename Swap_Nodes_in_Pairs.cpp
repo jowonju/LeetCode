@@ -3,11 +3,6 @@ public:
 
     ListNode* swapPairs(ListNode* head) {
         if(head == nullptr || head->next == nullptr)
-        {
-            return head;
-        }
-        
-        if(head == nullptr || head->next == nullptr)
             return head;
         
         int val = head->val;
