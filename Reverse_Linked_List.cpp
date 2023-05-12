@@ -43,5 +43,26 @@ public:
 
         //recursive
         return head ? reverseList(head->next, (head->next = prevNode, nextNode), head) : prevNode;
+
+        //recursive 2
+        ListNode* Recursive(ListNode* curr, ListNode* prev)
+        {
+            if(curr == nullptr)
+                return curr;
+            
+            if (curr->next == nullptr)
+            {
+                curr->next = prev;
+                return curr;
+            }
+
+            ListNode* result = Recursive(curr->next, curr);
+            curr->next = prev;
+            return result;
+        }
+
+        ListNode* reverseList(ListNode* head) {
+            return Recursive(head, nullptr);
+        }
     }
 };
