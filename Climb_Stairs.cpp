@@ -1,6 +1,25 @@
 class Solution {
 public:
+    //top-bottom
+    int CS(int n, std::vector<int>& vec)
+    {
+        if(vec[n] != 0)
+            return vec[n];
+        else if(n == 1)
+            return 1;
+        else if(n == 2)
+            return 2;
+        
+        return vec[n] = CS(n-1, vec) + CS(n-2,vec);
+        
+    }
     
+    int climbStairs(int n) {
+        vector<int> vec(n+1);
+        return CS(n, vec);
+    }
+
+
     //top-bottom memoization
     int find(int* arr, int n)
     {
