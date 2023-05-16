@@ -2157,3 +2157,35 @@ result)
   1110'1000
 
 After those stpes, the bit is reversed!
+
+*Leetcode - Pow(x,n)*
+```c++
+double myPow(double x, int n) {
+    
+    double result = 1;
+        
+    while(n)
+    {
+        if(n % 2)
+        {
+            if(n > 0)
+            {
+                result = x * result;
+            }
+            else
+            {
+                result = result * 1/x;
+            }
+        }
+        x = x * x;
+        n /= 2;
+    }
+
+    return result;
+}
+```
+The pow(x, 13) is same as pow(x, 8) * pow(x, 4) * pow(x, 1).
+And that representation is the same as the binary bit expression. (13 = 0b1101 = 2^3 + 2^2 + 2^0)
+For example, 2^5 == 2^4 * 2^1(= 2^(4 + 1)). 5 = 0b0101.
+So, multiply the x and result only when the n%2 value is 1.
+The x is multiplied continually and the n is divided by 2.
