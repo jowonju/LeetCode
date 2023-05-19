@@ -2189,3 +2189,35 @@ And that representation is the same as the binary bit expression. (13 = 0b1101 =
 For example, 2^5 == 2^4 * 2^1(= 2^(4 + 1)). 5 = 0b0101.
 So, multiply the x and result only when the n%2 value is 1.
 The x is multiplied continually and the n is divided by 2.
+
+*Leetcode - K-th symbol in Grammer*
+```c++
+int kthGrammar(int n, int k) {
+    if(n == 1)
+        return 0;
+        
+    int parent = kthGrammar(n-1, k/2 + k%2);
+    bool isKOdd = (k % 2 == 1);
+        
+    if(parent == 1)
+    {
+        if(isKOdd)
+            return 1;
+        else
+            return 0;
+        }
+    else {
+        if(isKOdd)
+            return 0;
+        else
+            return 1;
+    }
+}
+```
+If drawing a graph of the process, can see there is a pattern.
+![Alt text](/Images/path/to/kthsymbol.jpg?raw=true "Optional Title")
+Can know the parent of the current number with the n and k. 
+The parent position(with n and k) is n-1 and k/2 + k%2(round-up).
+Also, if the parent is 0 the first number of the pair must be 0.
+And the first number is located at the odd position of the k.
+For the parent 1, the first number of the pair is 1 and the position of the k is also located at the odd position of the k.
