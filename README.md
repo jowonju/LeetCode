@@ -2217,8 +2217,14 @@ int kthGrammar(int n, int k) {
 If drawing a graph of the process, can see there is a pattern.
 ![Alt text](./Images/kthsymbol.jpg "Optional Title")
 
-Can know the parent of the current number with the n and k. 
+Can know the parent of the current number with the n and k.
+
 The parent position(with n and k) is n-1 and k/2 + k%2(round-up).
+
 Also, if the parent is 0 the first number of the pair must be 0.
+
 And the first number is located at the odd position of the k.
+
 For the parent 1, the first number of the pair is 1 and the position of the k is also located at the odd position of the k.
+
+
