@@ -25,7 +25,7 @@ ListNode* middleNode(ListNode* head) {
 ```
 >Other people's
 ```c++
-   public ListNode middleNode(ListNode head) {
+public ListNode middleNode(ListNode head) {
     
     ListNode fastRunner = head;
     ListNode slowRunner = head;
@@ -47,45 +47,39 @@ I thought the fast-slow method is good when I distinguish the thing is a cycle o
 *leetcode 922*
 >My version
 ```c++
-class Solution {
-public:
-    vector<int> sortArrayByParityII(vector<int>& nums) {
-        int size = nums.size();
-        int j = 0;
-        for (int i = 0; i < size; i++) {
-            if (i % 2 == 0 && nums[i] % 2 != 0) {
-                while (true) {
-                    if (j % 2 == 1 && nums[j] % 2 == 0)
-                    {
-                        break;
-                    }
-                    j++;
+vector<int> sortArrayByParityII(vector<int>& nums){
+    int size = nums.size();
+    int j = 0;
+    for (int i = 0; i < size; i++) {
+        if (i % 2 == 0 && nums[i] % 2 != 0) {
+            while (true) {
+                if (j % 2 == 1 && nums[j] % 2 == 0)
+                {
+                    break;
                 }
-                swap(nums[j], nums[i]);
+                j++;
             }
+            swap(nums[j], nums[i]);
         }
-        return nums;
     }
-};
+    return nums;
+}
 ```
 >Other person's version
 ```c++
-class Solution {
-public:
-    vector<int> sortArrayByParityII(vector<int>& nums) {
-         
-        for(int i =0 , j =1 ; j < nums.size() && i <nums.size();)
-        {
-            if(nums[i] %2 ==0)
-            i+=2;
-            else if(nums[j] % 2 ==1)
-            j+=2;
-            else
-            swap(nums[i],nums[j]);
-        }
-        return nums;
+vector<int> sortArrayByParityII(vector<int>& nums) {
+
+    for (int i = 0, j = 1; j < nums.size() && i.nums.size())
+    {
+        if (nums[i] % 2 == 0)
+            i += 2;
+        else if (nums[j] % 2 == 1)
+            j += 2;
+        else
+            swap(nums[i], nums[j]);
     }
-};
+    return nums;
+}
 ```
 Since it checks even and odd indexes, it doesn't have to initialize only one variable or add one by one(like me, i++, and, i = 0). Just using +=2.
 I didn't familiar with using the two variables at the for loop, but I realized the usage when I see this version.
@@ -93,36 +87,29 @@ I didn't familiar with using the two variables at the for loop, but I realized t
 *leetcode 104*
 >My version
 ```c++
-class Solution {
-public:
-    int maxDepth(TreeNode* root) {
-        if (root == nullptr)
-            return 0;
-        int rightLength = 0;
-        int leftLength = 0;
-        int result = 0;
+int maxDepth(TreeNode* root) {
+    if (root == nullptr)
+        return 0;
+    int rightLength = 0;
+    int leftLength = 0;
+    int result = 0;
 
-        rightLength = maxDepth(root->right);
-        leftLength = maxDepth(root->left);
+    rightLength = maxDepth(root->right);
+    leftLength = maxDepth(root->left);
 
-        result = 1 + (rightLength > leftLength ? rightLength : leftLength);
+    result = 1 + (rightLength > leftLength ? rightLength : leftLength);
 
-        return result;
-    }
-};
+    return result;
+}
 ```
 >Other person's version
 ```c++
-class Solution{
-public:
-    int maxDepth(TreeNode* root) {
-        if(root == NULL){
-            return 0;
-        }
-        return max(maxDepth(root->right),maxDepth(root->left))+1;
+int maxDepth(TreeNode* root) {
+    if (root == NULL) {
+        return 0;
     }
-
-};
+    return max(maxDepth(root->right), maxDepth(root->left)) + 1;
+}
 ```
 When using algorithm max function, the runtime is 0 ms. If I use the max function, then I don't need to declare variables(like my version -> rightLength, leftLength, result).
 And I think this part 
@@ -135,22 +122,19 @@ Helpful link for understanding the recursion timeline: https://www.youtube.com/w
 *leetcode 614*
 >code
 ```c++
-class Solution {
-public:
-    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
-        if (root1 == nullptr)
-            return root2;
-        if (root2 == nullptr)
-            return root1;
-
-        root1->val += root2->val;
-        root1->left = mergeTrees(root1->left, root2->left);
-        root1->right = mergeTrees(root1->right, root2->right);
-
+TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+    if (root1 == nullptr)
+        return root2;
+    if (root2 == nullptr)
         return root1;
-        
-    }
-};
+
+    root1->val += root2->val;
+    root1->left = mergeTrees(root1->left, root2->left);
+    root1->right = mergeTrees(root1->right, root2->right);
+
+    return root1;
+
+}
 ```
 I struggle with this problem. After spending 1 day, I determined that seeing the solution and after seeing the solution, I felt this problem is good to practice the recursion.
 When I solving this problem, I knew the method that gets each value of the leaves but I didn't know how to store the values(each tree's leaf values). 
@@ -167,40 +151,34 @@ If root1 is null, return root2 and accept the value as a result, then I also cha
 *Leetcode 461*
 >my version
 ```c++
-class Solution {
-public:
-    int hammingDistance(int x, int y) {
-        int result = 0;
-        bitset<32> x_bitset(x);
-        bitset<32> y_bitset(y);
-        
-        for(int i = 0; i<x_bitset.size(); i++)
-        {
-            if (x_bitset[i] != y_bitset[i])
-                result++;
-        }
-        
-        return result;
+int hammingDistance(int x, int y) {
+    int result = 0;
+    bitset<32> x_bitset(x);
+    bitset<32> y_bitset(y);
+
+    for (int i = 0; i < x_bitset.size(); i++)
+    {
+        if (x_bitset[i] != y_bitset[i])
+            result++;
     }
-};
+
+    return result;
+}
 ```
 I used the bitset header to get the bits of the x and y. After getting the bits, I compared the bits one by one.
 For solving this question, I did study the bitset header usage.
 
 >other person's version
 ```c++
-class Solution {
-public:
-    int hammingDistance(int x, int y) {
-        int n = x ^ y;
-        int res = 0; 
-        while(n){ 
-            res += n & 1; 
-            n >>= 1; 
-        }
-        return res;         
+int hammingDistance(int x, int y) {
+    int n = x ^ y;
+    int res = 0;
+    while (n) {
+        res += n & 1;
+        n >>= 1;
     }
-};
+    return res;
+}
 ```
 This version using the XOR to get the result. I knew the XOR but I didn't think that using the XOR to solve this problem.
 For example, if x is 5 and y is 1.
@@ -214,32 +192,29 @@ I think the XOR version is useful to pratice the XOR or bit operation.
 I couldn't solve this problem so just understand write for the study.
 
 ```c++
-class Solution {
-public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int carry = 0;
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    int carry = 0;
 
-        ListNode* ans = new ListNode(-1);
-        ListNode* temp = ans;
+    ListNode* ans = new ListNode(-1);
+    ListNode* temp = ans;
 
-        while (l1 || l2 || carry != 0) {
-            int no1 = l1 ? l1->val : 0;
-            int no2 = l2 ? l2->val : 0;
+    while (l1 || l2 || carry != 0) {
+        int no1 = l1 ? l1->val : 0;
+        int no2 = l2 ? l2->val : 0;
 
-            int sum = no1 + no2 + carry;
+        int sum = no1 + no2 + carry;
 
-            temp->next = new ListNode(sum % 10);
-            temp = temp->next;
+        temp->next = new ListNode(sum % 10);
+        temp = temp->next;
 
-            carry = sum / 10;
+        carry = sum / 10;
 
-            l1 = l1 ? l1->next : l1;
-            l2 = l2 ? l2->next : l2;
-        }
-
-        return ans->next;
+        l1 = l1 ? l1->next : l1;
+        l2 = l2 ? l2->next : l2;
     }
-};
+
+    return ans->next;
+}
 ```
 Store the remainder to the temp->next. Since the temp is the ans's pointer, so the ans value is changed even if the temp value is changed.
 Get the l1 and l2's sum value also the carry. The carry is increased when the sum exceeds 10. (sum/10)
@@ -250,51 +225,48 @@ When the l1 or l2 is nullptr or the carry is 0 then I can get the answer(stored 
 *Leetcode 13*
 My one
 ```c++
-class Solution {
-public:
-    int romanToInt(string s) {
-             
-        int size = s.length();
-        int result = 0;
-        string copy = s;
-        std::map<char, int> dictionary;
-        
-        dictionary.insert(std::pair<char,int>('I', 1));
-        dictionary.insert(std::pair<char,int>('V', 5));
-        dictionary.insert(std::pair<char,int>('X', 10));
-        dictionary.insert(std::pair<char,int>('L', 50));
-        dictionary.insert(std::pair<char,int>('C', 100));
-        dictionary.insert(std::pair<char,int>('D', 500));
-        dictionary.insert(std::pair<char,int>('M', 1000));
-        
-        for(int i = 0; i < size; i++)
+int romanToInt(string s) {
+
+    int size = s.length();
+    int result = 0;
+    string copy = s;
+    std::map<char, int> dictionary;
+
+    dictionary.insert(std::pair<char, int>('I', 1));
+    dictionary.insert(std::pair<char, int>('V', 5));
+    dictionary.insert(std::pair<char, int>('X', 10));
+    dictionary.insert(std::pair<char, int>('L', 50));
+    dictionary.insert(std::pair<char, int>('C', 100));
+    dictionary.insert(std::pair<char, int>('D', 500));
+    dictionary.insert(std::pair<char, int>('M', 1000));
+
+    for (int i = 0; i < size; i++)
+    {
+        if (i == size - 1)
+            continue;
+
+        int compare1 = dictionary.find(copy[i])->second;
+        int compare2 = dictionary.find(copy[i + 1])->second;
+
+        if (compare1 >= compare2)
         {
-            if(i == size -1)
-                continue;
-            
-            int compare1 = dictionary.find(copy[i])->second;
-            int compare2 = dictionary.find(copy[i+1])->second;
-            
-            if (compare1 >= compare2)
-            {
-                result += compare1; 
-            }
-            else {
-                int abs = std::abs(compare1 - compare2);
-                result += abs;
-                i++;
-                if(i == size - 1)
-                {
-                    return result;
-                }
-            }
-                    
+            result += compare1;
         }
-            
-        result += dictionary.find(copy[size-1])->second;
-        return result;       
+        else {
+            int abs = std::abs(compare1 - compare2);
+            result += abs;
+            i++;
+            if (i == size - 1)
+            {
+                return result;
+            }
+        }
+
     }
-};
+
+    result += dictionary.find(copy[size - 1])->second;
+    return result;
+}
 ```
 Runtime: 24 ms, faster than 30.97% of C++ online submissions for Roman to Integer.
 Memory Usage: 8.2 MB, less than 29.33% of C++ online submissions for Roman to Integer.
@@ -305,29 +277,26 @@ Because the two chars combined to the one string and the other situation just ad
 
 Another one
 ```c++
-class Solution {
-public:
-    int romanToInt(string s) {
-        unordered_map<char,int> mp{
-            {'I',1},
-            {'V',5},
-            {'X',10},
-            {'L',50},
-            {'C',100},
-            {'D',500},
-            {'M',1000},
-        };
-        int ans =0;
-        for(int i=0;i<s.size();i++){
-            if(mp[s[i]]<mp[s[i+1]])
-                ans-=mp[s[i]];
-            else
-                ans+=mp[s[i]];
-        }
-        return ans;
-        
+int romanToInt(string s) {
+    unordered_map<char, int> mp{
+        {'I',1},
+        {'V',5},
+        {'X',10},
+        {'L',50},
+        {'C',100},
+        {'D',500},
+        {'M',1000},
+    };
+    int ans = 0;
+    for (int i = 0; i < s.size(); i++) {
+        if (mp[s[i]] < mp[s[i + 1]])
+            ans -= mp[s[i]];
+        else
+            ans += mp[s[i]];
     }
-};
+    return ans;
+
+}
 ```
 It is similar to mine, but this one used an unordered map and did not use the insert function when initializing.
 Also, this used the mp[s[i]], means the [] operator.
@@ -336,25 +305,22 @@ It is better to reduce the runtime because of not using the find function in eve
 
 *Leetcode - Remove Duplicates from Sorted Array*
 ```c++
-class Solution {
-public:
-    int removeDuplicates(vector<int>& nums) {
-        int size = nums.size();
+int removeDuplicates(vector<int>& nums) {
+    int size = nums.size();
 
-        for(int i = size - 1; i > 0; i--)
-        {            
-            if(i == 0)
-                continue;
-            
-            if(nums[i] == nums[i - 1])
-            {
-                nums.erase(nums.begin() + i);
-            }
+    for (int i = size - 1; i > 0; i--)
+    {
+        if (i == 0)
+            continue;
+
+        if (nums[i] == nums[i - 1])
+        {
+            nums.erase(nums.begin() + i);
         }
-        
-        return nums.size();
     }
-};
+
+    return nums.size();
+}
 ```
 I checked all elements using linear search. 
 If the first value(nums[i]) is equal with the second value(nums[i - 1]) then delete the first value.
@@ -362,28 +328,25 @@ After checking all values, then just return the size of the changed vector.
 
 *Leetcode - Best Time to Buy and Sell Stock II*
 ```c++
-class Solution {
-public:
-    int maxProfit(vector<int>& prices) {
-        
-        int result = 0;
-        int size = prices.size();
+int maxProfit(vector<int>& prices) {
 
-        for(int i = 0; i < size; i++)
+    int result = 0;
+    int size = prices.size();
+
+    for (int i = 0; i < size; i++)
+    {
+        if (i == size - 1)
+            continue;
+
+        if (prices[i] < prices[i + 1])
         {
-            if(i == size - 1)
-                continue;
-            
-            if(prices[i] < prices[i + 1])
-            {
-                result += prices[i + 1] - prices[i];   
-            }
-            
+            result += prices[i + 1] - prices[i];
         }
 
-        return result;
     }
-};
+
+    return result;
+}
 ```
 For check the profit, I compared the first value(prices[i]) and the second value(prices[i + 1]). 
 If the first value is greater than the second value, then I can profit because I can sell the stock more expensive than I bought.
@@ -392,29 +355,22 @@ After storing the calculated profit, keep checking values. And if the condition 
 *Leetcode - Rotate Array*
 ```c++
 
-class Solution {
-public:
-    void rotate(vector<int>& nums, int k) {
-        int s = nums.size();
-        vector<int> modded(s);
-        for(int i = 0; i < s; i++) modded[(i+k)%s] = nums[i];
-        nums = modded;
-    }
-};
+void rotate(vector<int>& nums, int k) {
+    int s = nums.size();
+    vector<int> modded(s);
+    for (int i = 0; i < s; i++) modded[(i + k) % s] = nums[i];
+    nums = modded;
+}
 
-class Solution {
-public:
-    void rotate(vector<int>& nums, int k) {
-        int size = nums.size();
-        int k_ = k % size;
-            
-        reverse(nums.begin(), nums.begin() + size - k_);
-        reverse(nums.begin() +size - k_, nums.end());
-        reverse(nums.begin(), nums.end());
-    
-    }
+void rotate(vector<int>& nums, int k) {
+    int size = nums.size();
+    int k_ = k % size;
 
-};
+    reverse(nums.begin(), nums.begin() + size - k_);
+    reverse(nums.begin() + size - k_, nums.end());
+    reverse(nums.begin(), nums.end());
+
+}
 ```
 I didn't solve this problem but I can get to how to approach (rotating formula and reverse way) the rotating.
 
@@ -442,28 +398,25 @@ Then I can easily get the reversed array.
 *Leetcode - Contains Duplicate*
 
 ```c++
-class Solution {
-public:
-    bool containsDuplicate(vector<int>& nums) {
-        bool result = false;
-        vector<int> storage = nums;
-        std::sort(storage.begin(), storage.end());
-        
-        for(int i = 0; i < storage.size(); i++)
+bool containsDuplicate(vector<int>& nums) {
+    bool result = false;
+    vector<int> storage = nums;
+    std::sort(storage.begin(), storage.end());
+
+    for (int i = 0; i < storage.size(); i++)
+    {
+        if (i == storage.size() - 1)
+            continue;
+
+        if (storage[i] == storage[i + 1])
         {
-            if(i == storage.size() - 1)
-                continue;
-            
-            if(storage[i] == storage[i + 1])
-            {
-                result = true;
-                break;
-            }   
+            result = true;
+            break;
         }
-        
-        return result;
     }
-};
+
+    return result;
+}
 ```
 
 First, I thought compare all values using two for loops. 
@@ -489,61 +442,55 @@ The sort function's time complexity is O(n log n) so it's better than the second
 
 my one
 ```c++
-class Solution {
-public:
-    int singleNumber(vector<int>& nums) {
-        vector<int> storage = nums;
-        sort(storage.begin(), storage.end());
-        int size = nums.size();
-        int result = 0;
-        bool check = false;
-        
-        for(int i = 0; i < size - 1; i++)
+int singleNumber(vector<int>& nums) {
+    vector<int> storage = nums;
+    sort(storage.begin(), storage.end());
+    int size = nums.size();
+    int result = 0;
+    bool check = false;
+
+    for (int i = 0; i < size - 1; i++)
+    {
+        if (storage[i] == storage[i + 1])
         {
-            if(storage[i] == storage[i + 1])
-            {
-                i++;
-                continue;
-            }
-            else{
-                check = true;
-                result = storage[i];
-                break;
-            }
+            i++;
+            continue;
         }
-        
-        if(!check)
-            result = storage[size - 1];
-            
-        return result;
+        else {
+            check = true;
+            result = storage[i];
+            break;
+        }
     }
-};
+
+    if (!check)
+        result = storage[size - 1];
+
+    return result;
+}
 ```
 I thought if I used sorting then I can find the single number by searching the first(storage[i]) and the second value(storage[i+1]).
 but I found better ways to solve this problem.
 If I use the return, I don't need to use the bool variable.
 Below is the improved version.
 ```c++
-class Solution {
-public:
-    int singleNumber(vector<int>& nums) {
-        vector<int> storage = nums;
-        sort(storage.begin(), storage.end());
-        int size = nums.size();
-        int result = 0;
-        bool check = false;
-        
-        for(int i = 0; i < size - 1; i += 2)
+int singleNumber(vector<int>& nums) {
+    vector<int> storage = nums;
+    sort(storage.begin(), storage.end());
+    int size = nums.size();
+    int result = 0;
+    bool check = false;
+
+    for (int i = 0; i < size - 1; i += 2)
+    {
+        if (storage[i] != storage[i + 1])
         {
-            if(storage[i] != storage[i + 1])
-            {
-                return storage[i];
-            }
-            
-        }   
-        return storage[size - 1];
+            return storage[i];
+        }
+
     }
-};
+    return storage[size - 1];
+}
 ```
 
 And can solve this problem by using the map.
@@ -552,18 +499,15 @@ But I'm not familiar with using the map so I just used the first way.
 
 another one using map
 ```c++
-class Solution {
-public:
-    int singleNumber(vector<int>& nums) { 
-       unordered_map<int,int> a;
-       for(auto x: nums)
-           a[x]++;
-       for(auto z:a)
-           if(z.second==1)
-               return z.first;
-       return -1;
-    }
-};
+int singleNumber(vector<int>& nums) {
+    unordered_map<int, int> a;
+    for (auto x : nums)
+        a[x]++;
+    for (auto z : a)
+        if (z.second == 1)
+            return z.first;
+    return -1;
+}
 ```
 This is another person's answer for using a map.
 After passing the for loop, the map stored values in ascending order.
@@ -574,36 +518,33 @@ so I can get the single number through the map's second value.
 
 my one
 ```c++
-class Solution {
-public:
-    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-        map<int, int> store1;
-        map<int, int> store2;
-        vector<int> result;
-        
-        for(auto num: nums1)
-        {
-            store1[num]++;
-        }
-        
-        for(auto num: nums2)
-        {
-            store2[num]++;
-        }
-        
-        for(std::map<int, int>::iterator it = store1.begin(); it != store1.end(); it++)
-        {
-            int compare = it->first;
-            std::map<int, int>::iterator iter = store2.find(compare);
-            int count = min(iter->second, it->second);
-            for(int i = 0; i < count; i++)
-            {
-                result.push_back(iter->first);
-            }
-        }
-        return result;
+vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+    map<int, int> store1;
+    map<int, int> store2;
+    vector<int> result;
+
+    for (auto num : nums1)
+    {
+        store1[num]++;
     }
-};
+
+    for (auto num : nums2)
+    {
+        store2[num]++;
+    }
+
+    for (std::map<int, int>::iterator it = store1.begin(); it != store1.end(); it++)
+    {
+        int compare = it->first;
+        std::map<int, int>::iterator iter = store2.find(compare);
+        int count = min(iter->second, it->second);
+        for (int i = 0; i < count; i++)
+        {
+            result.push_back(iter->first);
+        }
+    }
+    return result;
+}
 ```
 I used map STL to compare the values.
 First, store the values of each map.
@@ -617,20 +558,18 @@ If succeed at finding the value, then push_back the iterator's second value as t
 
 the another one
 ```c++
-class Solution {
-public:
 vector intersect(vector& nums1, vector& nums2) {
 
     vector<int> ans;
-    
+
     sort(nums1.begin(), nums1.end());
     sort(nums2.begin(), nums2.end());
-    
-    for(int i=0, j=0; i<nums1.size() && j<nums2.size(); )
+
+    for (int i = 0, j = 0; i < nums1.size() && j < nums2.size(); )
     {
-        if(nums1[i] < nums2[j])
+        if (nums1[i] < nums2[j])
             i++;
-        else if(nums1[i] > nums2[j])
+        else if (nums1[i] > nums2[j])
             j++;
         else
         {
@@ -641,7 +580,6 @@ vector intersect(vector& nums1, vector& nums2) {
     }
     return ans;
 }
-};
 ```
 Above answer is the 100% fastest version.
 This answer used sorting and for-loop that using two initial variable.
@@ -654,34 +592,31 @@ When the condition that two values are same is met, then push_back the value bec
 *Leetcode - Plus One*
 
 ```c++
-class Solution {
-public:
-    vector<int> plusOne(vector<int>& digits) {
-        vector<int> result;
-        int size = digits.size();
-    
-        for(int i = size, index = size - 1; i > 0; i--, index--)
+vector<int> plusOne(vector<int>& digits) {
+    vector<int> result;
+    int size = digits.size();
+
+    for (int i = size, index = size - 1; i > 0; i--, index--)
+    {
+        int count = digits[index] + 1;
+        if (count == 10)
         {
-            int count = digits[index] + 1;
-            if(count == 10)
+            if (index - 1 < 0)
             {
-                if(index - 1 < 0)
-                {
-                    digits[index] = 1;
-                    digits.push_back(0);
-                }
-                else {
-                    digits[index] = 0; 
-                }
+                digits[index] = 1;
+                digits.push_back(0);
             }
             else {
-                digits[index]++;
-                return digits;
+                digits[index] = 0;
             }
         }
-        return digits;
+        else {
+            digits[index]++;
+            return digits;
+        }
     }
-};
+    return digits;
+}
 ```
 First, start at the end of the vector and just plus one to the element.
 If the element value is under 9, don't need to think about the digit number, but if the value is over 9, then it means the digit number is increased. 
@@ -692,77 +627,70 @@ So changed the index value 1 and push back 0 to the end, the result be [1, 0].
 
 *Leetcode - Move Zeros*
 
-
 ```c++
-class Solution {
-public:
-    void moveZeroes(vector<int>& nums) {
-        int size = nums.size();
-          
-        if(size == 1) 
-            return;
-        
-        int zeroCount = 0;
-        bool flag = false;
-        
-        for(int i = 0; i < size; i++)
+void moveZeroes(vector<int>& nums) {
+    int size = nums.size();
+
+    if (size == 1)
+        return;
+
+    int zeroCount = 0;
+    bool flag = false;
+
+    for (int i = 0; i < size; i++)
+    {
+        if (nums.size() == 0 || i > nums.size() - 1)
+            break;
+
+        if (flag)
         {
-            if(nums.size() == 0 || i > nums.size() - 1)
-                break;
-            
-            if(flag)
-            {
-                i = 0;
-                flag = false;
-            }
-            if(nums[i] == 0)
-            {
-                nums.erase(nums.begin() + i);
-                zeroCount++;
-                flag = true;
-            }
+            i = 0;
+            flag = false;
         }
-        
-        for(int i = 0; i < zeroCount; i++)
+        if (nums[i] == 0)
         {
-            nums.push_back(0);
+            nums.erase(nums.begin() + i);
+            zeroCount++;
+            flag = true;
         }
     }
-};
+
+    for (int i = 0; i < zeroCount; i++)
+    {
+        nums.push_back(0);
+    }
+}
 ```
 First, I thought to get the frequency of zeros and erase the zero value when encountering the nums[i] is 0.
 Second, after deleting all zeros, push_back the zero.
 The flag and size == 0 are conditions to avoid the out-of-range error.
 
 ```c++
-class Solution {
-public:
-    void moveZeroes(vector<int>& nums) {
-        int size = nums.size();
-          
-        if(size == 1) 
-            return;
-        
-        int zeroCount = 0;
-        bool flag = false;
-        
-        for(int i = 0; i < nums.size(); i++)
+void moveZeroes(vector<int>& nums) {
+    int size = nums.size();
+
+    if (size == 1)
+        return;
+
+    int zeroCount = 0;
+    bool flag = false;
+
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (nums[i] == 0)
         {
-            if(nums[i]==0)
-            {
-                nums.erase(nums.begin() + i);
-                i--;
-                zeroCount++;    
-            }
-            
+            nums.erase(nums.begin() + i);
+            i--;
+            zeroCount++;
         }
-        
-        for(int i = 0; i < zeroCount; i++)
-        {
-            nums.push_back(0);
-        }
+
     }
-};
+
+    for (int i = 0; i < zeroCount; i++)
+    {
+        nums.push_back(0);
+    }
+}
 ```
 The second version is an improved version.
 The first time, I tried this version that deleting the zero number by using nums.begin() + i;
@@ -773,50 +701,44 @@ If I changed to nums.size() then I don't need to think about the out-of-range er
 
 my one
 ```c++
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        int size = nums.size();
-        for(int i = 0 ; i < size; i ++)
-        { 
-            int findValue = target - nums[i];
-            for(int j = 0; j < size; j++)
+vector<int> twoSum(vector<int>& nums, int target) {
+    int size = nums.size();
+    for (int i = 0; i < size; i++)
+    {
+        int findValue = target - nums[i];
+        for (int j = 0; j < size; j++)
+        {
+            if (i == j)
+                continue;
+
+            if (nums[j] == findValue)
             {
-                if(i == j)
-                    continue;
-                
-                if(nums[j] == findValue)
-                {
-                    return {i,j};
-                }
+                return { i,j };
             }
         }
-        return {-1,-1};
     }
-};
+    return { -1,-1 };
+}
 ```
 I used brute force way. 
 Find the findvalue(target = num1 + num2 => num1 = target - num2) from the second for loop and return the vector right away.
 
 another one - using hash map(unordered_map using hash table)
 ```c++
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int,int>mp;
-        int size = nums.size();
-        for(int i = 0; i < size; ++i)
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int>mp;
+    int size = nums.size();
+    for (int i = 0; i < size; ++i)
+    {
+        int diff = target - nums[i];
+        if (mp.find(diff) != mp.end())
         {
-            int diff = target - nums[i];
-            if(mp.find(diff)!=mp.end())
-            {
-                return {mp[diff],i};
-            }
-            mp.insert({nums[i],i});
+            return { mp[diff],i };
         }
-        return {};
+        mp.insert({ nums[i],i });
     }
-};
+    return {};
+}
 ```
 I am not familiar with using a hash map(unorderded_map).
 So after solving the problem using brute force, I tried to solve this problem using the hash map.
@@ -1841,60 +1763,57 @@ And make the tail's next node to non-nullptr node of list1 or list2 because the 
 
 *Leetcode - Palindrome Linked List*
 ```c++
-class Solution {
-public:
-    bool isPalindrome(ListNode* head) {
+bool isPalindrome(ListNode* head) {
 
-        //using another data container. time complexity: O(n), space complexity: 
-        stack<int> stk;
+    //using another data container. time complexity: O(n), space complexity: 
+    stack<int> stk;
         
-        for(auto ptr = head; ptr != nullptr; ptr = ptr->next)
-        {
-            stk.push(ptr->val);
-        }
-        
-        int size = stk.size();
-        
-        for(int i = 0; i < size / 2; i++)
-        {
-            if(head->val != stk.top())
-                return false;
-            
-            stk.pop();
-            head = head->next;
-        }
-        return true;
-        
-        //Floyd's Cycle Detection Algorithm. space complexity:O(1) time complexity: O(N)
-        ListNode* fast = head, *slow = head, *prev, *temp;
-        
-        while(fast && fast->next)
-        {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
-        
-        prev = slow; slow=slow->next; prev->next = NULL;
-        while(slow)
-        {
-            temp = slow->next;
-            slow->next = prev;
-            prev = slow;
-            slow = temp;
-        }
-        
-        slow = prev; fast = head;
-        while(slow)
-        {
-            if(slow->val != fast->val)
-                return false;
-            slow = slow->next;
-            fast = fast->next;
-        }
-        
-        return true;
+    for(auto ptr = head; ptr != nullptr; ptr = ptr->next)
+    {
+        stk.push(ptr->val);
     }
-};
+        
+    int size = stk.size();
+        
+    for(int i = 0; i < size / 2; i++)
+    {
+        if(head->val != stk.top())
+            return false;
+            
+        stk.pop();
+        head = head->next;
+    }
+    return true;
+        
+    //Floyd's Cycle Detection Algorithm. space complexity:O(1) time complexity: O(N)
+    ListNode* fast = head, *slow = head, *prev, *temp;
+        
+    while(fast && fast->next)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+        
+    prev = slow; slow=slow->next; prev->next = NULL;
+    while(slow)
+    {
+        temp = slow->next;
+        slow->next = prev;
+        prev = slow;
+        slow = temp;
+    }
+        
+    slow = prev; fast = head;
+    while(slow)
+    {
+        if(slow->val != fast->val)
+            return false;
+        slow = slow->next;
+        fast = fast->next;
+    }
+        
+    return true;
+}
 ```
 The first way is just using another data container to copy the list's values.
 And compare the values using the container.
@@ -1912,22 +1831,19 @@ And compare the values if the value is not equal the list is not a palindrome.
 
 *Leetcode - Linked List Cycle*
 ```c++
-class Solution {
-public:
-    bool hasCycle(ListNode* head) {
-        ListNode* fast = head;
-        ListNode* slow = head;
-        while (fast != nullptr && fast->next !=nullptr)
-        {
-            slow = slow->next;
-            fast = fast->next->next;
-            if (fast == slow)
-                return true;
-        }
-        return false;
-        
+bool hasCycle(ListNode* head) {
+    ListNode* fast = head;
+    ListNode* slow = head;
+    while (fast != nullptr && fast->next !=nullptr)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (fast == slow)
+            return true;
     }
-};
+    return false;
+        
+}
 
 ```
 Using two pointers for checking the list is cycled.
