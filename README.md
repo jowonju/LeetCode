@@ -2197,3 +2197,47 @@ for (int j = 0; j < leftSubTree.size(); j++) {
     }
 }
 ```
+
+*Leetcode - Product of Array Except Itself*
+```c++
+    int prod = 1;
+    int count = 0;
+    int size = nums.size();
+    vector<int> res(0, size);
+        
+    for(int i = 0; i < size; i++)
+    {
+        if(nums[i] == 0)
+        {
+            count++;
+        }
+        else{
+            prod *= nums[i];
+        }
+    }
+```
+If there are more than one 0's in the vector, all elements will be 0.
+If there is only one 0's in the vector, all elements will be 0 except the 0 element(nums[i] == 0).
+If there is no 0's in the vector, each element will be prod / nums[i] because it does not multiply itself.
+Above method using division operator.
+
+```c++
+for (int i = 1; i < size - 1; i++)
+{
+    pre.push_back(pre[i - 1] * nums[i]);
+}
+
+for (int i = size - 2; i > 0; i--)
+{
+    suf.push_back(nums[i] * suf[i + 1]);
+}
+
+for (int i = 0; i < size; i++)
+{
+    if (i == 0) nums[i] = suf[i + 1];
+    else if (i == size - 1) pre[i - 1];
+    else nums[i] = pre[i - 1] * suf[i + 1];
+}
+```
+If storing the suffix and prefix container of the current element, can know the product value of the current element.
+nums[i] = pre[i-1] * suf[i+1] will be the result.
