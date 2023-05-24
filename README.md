@@ -2241,3 +2241,27 @@ for (int i = 0; i < size; i++)
 ```
 If storing the suffix and prefix container of the current element, can know the product value of the current element.
 nums[i] = pre[i-1] * suf[i+1] will be the result.
+
+*Leetcode - Longest nice substring*
+
+```c++
+string longestNiceSubstring(string s) {
+    if(s.length() < 2) return "";
+
+    unordered_set<char> us(s.begin(), s.end());
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        if (us.find((char)toupper(s[i])) == end(us) || us.find((char)tolower(s[i])) == end(us)) {
+                string s1 = longestNiceSubstring(s.substr(0, i));
+                string s2 = longestNiceSubstring(s.substr(i + 1));
+                return s1.size() >= s2.size() ? s1 : s2;
+        }
+    }
+    return s;
+}
+```
+Store the unique alphabet in the container. The unordered_set automatically stores unique variables.
+Check the upper or lower alphabet of the current char are not in the container.
+And divided the string into two, one is from 0 to before the current char and another one is from i+1 to the end of the string. 
+Divided the string with recursion and return the longest string between them.
