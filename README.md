@@ -2133,6 +2133,7 @@ int kthGrammar(int n, int k) {
 If drawing a graph of the process, can see there is a pattern.
 ![Alt text](./Images/kthsymbol.jpg "Optional Title")
 
+
 Can know the parent of the current number with the n and k.
 
 The parent position(with n and k) is n-1 and k/2 + k%2(round-up).
@@ -2265,3 +2266,21 @@ Store the unique alphabet in the container. The unordered_set automatically stor
 Check the upper or lower alphabet of the current char are not in the container.
 And divided the string into two, one is from 0 to before the current char and another one is from i+1 to the end of the string. 
 Divided the string with recursion and return the longest string between them.
+
+*Leetcode - Remove Linked List Elements*
+```c++
+ListNode* removeElements(ListNode* head, int val) {
+    if(head == nullptr) return nullptr;
+
+    head->next = removeElements(head->next, val);
+
+    if(head->val == val)
+        return head->next;
+    else
+        return head;
+}
+```
+Call the function recursively until the head reached the nullptr.
+If the head value is same as the value, return the next node of the head because don't need to point the node that has certain value.
+And if the head value is not same as the value, just return the head value.
+![Alt text](./Images/Remove_Linked_List_Elements.jpg "Optional Title")
