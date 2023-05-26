@@ -2281,6 +2281,9 @@ ListNode* removeElements(ListNode* head, int val) {
 }
 ```
 Call the function recursively until the head reached the nullptr.
+
 If the head value is same as the value, return the next node of the head because don't need to point the node that has certain value.
+
 And if the head value is not same as the value, just return the head value.
+
 ![Alt text](./Images/Remove_Linked_List_Elements.jpg "Optional Title")
