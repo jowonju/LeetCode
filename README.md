@@ -2288,8 +2288,7 @@ And if the head value is not same as the value, just return the head value.
 
 ![Alt text](./Images/Remove_Linked_List_Elements.jpg "Optional Title")
 
-*Leetcode - HouseRobber2*
-
+*Leetcode - House Robber2*
 ```c++
 int robHelper(vector<int>& nums, int l, int r){
     int prev = 0;
