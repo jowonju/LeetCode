@@ -2287,3 +2287,31 @@ If the head value is same as the value, return the next node of the head because
 And if the head value is not same as the value, just return the head value.
 
 ![Alt text](./Images/Remove_Linked_List_Elements.jpg "Optional Title")
+
+*Leetcode - HouseRobber2*
+
+```c++
+int robHelper(vector<int>& nums, int l, int r){
+    int prev = 0;
+    int curr = 0;
+    for(int i = l; i <= r; i++)
+    {
+        int temp = max(prev + nums[i], curr);
+        prev = curr;
+        curr = temp;
+    }
+    return curr;
+}
+
+int rob(vector<int>& nums) {
+    int size = nums.size();
+    if(size < 2) return nums[0];
+    return max(robHelper(nums, 0, size - 2), robHelper(nums, 1, size - 1));
+}
+```
+It is the same problem as the house robber1 problem except the houses are arranged in a circle.
+So, I cannot rob the last house if I robbed the first house because they are arranged in a circle.
+Therefore, the problem's subproblem is divided into 2 problems. 
+The first one is a situation that robbing the first house so I cannot rob the last house(0 ~ size-2).
+The second one is a situation that not robbing the first house so I can rob the last house(1 ~ size -1).
+Can solve the problem by using the function of the house robber1 and dividing the problems into 2 subproblems.

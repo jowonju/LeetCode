@@ -33,4 +33,18 @@ public:
 
         return dp[i] = max(rob(A, dp, i + 1), A[i] + rob(A, dp, i + 2));
     }
+
+    //Space complexity: O(1): //Space complexity: O(1): It is the same method as the above tabulation but just uses the two variables than the vector(=O(N)).
+    int rob(vector<int>& nums) {
+    
+    int prev = 0, curr = 0;
+
+    for(int i = 0; i < nums.size(); i++)
+    {
+        int temp = max(prev + nums[i], curr);
+        prev = curr;
+        curr = temp;
+    }
+    return curr;
+
 };
