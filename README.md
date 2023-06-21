@@ -2314,3 +2314,36 @@ Therefore, the problem's subproblem is divided into 2 problems.
 The first one is a situation that robbing the first house so I cannot rob the last house(0 ~ size-2).
 The second one is a situation that not robbing the first house so I can rob the last house(1 ~ size -1).
 Can solve the problem by using the function of the house robber1 and dividing the problems into 2 subproblems.
+
+*Leetcode - Delete and Earn*
+
+```c++
+int deleteAndEarn(vector<int>& nums) {
+    int take = 0;
+    int skip = 0;
+
+    vector<int> vec(10001, 0);
+
+    for(int num : nums)
+    {
+        vec[num] += num;
+    }
+
+    for(int i = 0; i < 10001; i++)
+    {
+        int takei = skip + vec[i];
+        int skipi = max(skip, take);
+        take = takei;
+        skip = skipi;
+    }
+    
+    return max(take, skip);
+}
+```
+This problem is very similar problem with the house robber problem.
+If the array is sorted, the deleted values, val - 1 and val + 1, are adjacent values of the current index.
+I can use the sort function but also can use the additional array(vec) as a cache.
+And get the sum of the duplicated numbers to avoid redundant calculations.
+The take and skip variables are tracking variables of the previous variable and the pre-previous variable.
+Since I cannot take the previous number if I decide to take the current number. (so need to use the skip variable)
+So the formula takes = skip + vec[i] and the skip = max(skip, take) <- Using a max function for tracking the maximum profit.
